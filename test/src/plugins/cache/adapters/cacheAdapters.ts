@@ -1,8 +1,8 @@
-import crypto from 'crypto'
-import { RedisClientType } from 'redis'
+import crypto from 'crypto';
+import { RedisClientType } from 'redis';
+import { redisContext } from './redisContext';
 
 const CACHE_INDEXES = 'payload-cache-index'
-
 
 export function generateCacheHash(
     requestedUrl: string,
@@ -12,9 +12,10 @@ export function generateCacheHash(
 }
 
 export async function getCacheItem<T = {}>(
+    redisURL: string,
     requestedUrl: string,
-    redisClient: RedisClientType,
 ): Promise<T | null> {
+    const redisClient = redisContext.getRedisClient(redisURL)
     const hash = generateCacheHash(requestedUrl)
     const jsonData = await redisClient.GET(hash)
     if (!jsonData) {
@@ -26,10 +27,11 @@ export async function getCacheItem<T = {}>(
 }
 
 export function setCacheItem<T>(
+    redisURL: string,
     requestedUrl: string,
-    redisClient: RedisClientType,
     paginatedDocs: T
 ) {
+    const redisClient = redisContext.getRedisClient(redisURL)
     const hash = generateCacheHash(requestedUrl)
     console.log('>> Set Cache Item', requestedUrl)
 
@@ -50,3 +52,4 @@ export async function invalidateCache(redisClient: RedisClientType,) {
         redisClient.SREM(CACHE_INDEXES, index)
     })
 }
+
