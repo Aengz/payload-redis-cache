@@ -2,6 +2,7 @@ import path from 'path';
 import { buildConfig } from 'payload/config';
 // import Examples from './collections/Examples';
 import Users from './collections/Users';
+import { CachePlugin } from './plugins/cache/cache';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -19,4 +20,7 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
+  plugins: [
+    CachePlugin({redisUrl: 'redis://localhost:6379'})
+  ]
 });
