@@ -1,6 +1,10 @@
 {
+  "name": "payload-redis-cache", 
+   "description": "Payload Redis Cache Plugin",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.21",
     "redis": "^4.5.1"
   }
 }

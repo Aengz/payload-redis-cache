@@ -1,5 +1,4 @@
 import crypto from 'crypto'
-import { isNil } from 'lodash'
 import { RedisClientType } from 'redis'
 
 const CACHE_INDEXES = 'payload-cache-index'
@@ -18,7 +17,7 @@ export async function getCacheItem<T = {}>(
 ): Promise<T | null> {
     const hash = generateCacheHash(requestedUrl)
     const jsonData = await redisClient.GET(hash)
-    if (isNil(jsonData)) {
+    if (!jsonData) {
         console.log('<< Get Cache [MISS]', requestedUrl)
         return null
     }
