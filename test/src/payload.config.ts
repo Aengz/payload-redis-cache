@@ -21,6 +21,6 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
   plugins: [
-    CachePlugin({redisUrl: 'redis://localhost:6379'})
+    CachePlugin({redisURL: 'redis://localhost:6379'})
   ]
 });

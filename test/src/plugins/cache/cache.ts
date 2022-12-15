@@ -6,7 +6,7 @@ import { PluginOptions } from './types';
 export const CachePlugin = 
   (pluginOptions: PluginOptions) => 
   (incomingConfig: Config): Config => {
-    const {redisUrl} = pluginOptions
+    const {redisURL: redisUrl} = pluginOptions
     const collections = incomingConfig.collections.map((collection) => {
         return {
           ...collection,

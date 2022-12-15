@@ -1,6 +1,6 @@
 
 export interface PluginOptions {
-  redisUrl: string
+  redisURL: string
 }
 
 export interface GeneratedAdapter {
