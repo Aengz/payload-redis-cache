@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { RedisClientType } from 'redis';
 import { redisContext } from './redisContext';
 
 const CACHE_INDEXES = 'payload-cache-index'
@@ -45,7 +44,8 @@ export function setCacheItem<T>(
     }
 }
 
-export async function invalidateCache(redisClient: RedisClientType,) {
+export async function invalidateCache( redisURL: string) {
+    const redisClient = redisContext.getRedisClient(redisURL)
     const indexes = await redisClient.SMEMBERS(CACHE_INDEXES)
     indexes.forEach((index) => {
         redisClient.DEL(index)
