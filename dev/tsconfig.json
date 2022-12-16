@@ -7,10 +7,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "../src",
-    "jsx": "react"
+    "rootDir": "../",
+    "jsx": "react",
+    "sourceMap": true
   },
-  "include": ["../src"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", "build"],
   "ts-node": {
     "transpileOnly": true
