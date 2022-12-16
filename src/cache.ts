@@ -2,11 +2,11 @@ import { Config } from 'payload/config'
 import { getCacheHook, upsertCacheHook } from './hooks'
 import { PluginOptions } from './types'
 
-export const CachePlugin =
+export const cachePlugin =
   (pluginOptions: PluginOptions) =>
-  (incomingConfig: Config): Config => {
+  (config: Config): Config => {
     const { redisURL: redisUrl } = pluginOptions
-    const collections = incomingConfig.collections?.map((collection) => {
+    const collections = config.collections?.map((collection) => {
       const { hooks } = collection
       const afterChange = [...(hooks?.afterChange || []), upsertCacheHook(redisUrl)]
       const beforeOperation = [...(hooks?.beforeOperation || []), getCacheHook(redisUrl)]
@@ -21,12 +21,8 @@ export const CachePlugin =
       }
     })
 
-    const config: Config = {
-      ...incomingConfig,
-      collections
-    }
-
     return {
-      ...config
+      ...config,
+      collections
     }
   }

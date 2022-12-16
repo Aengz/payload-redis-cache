@@ -1,6 +1,7 @@
 import path from 'path'
 import { buildConfig } from 'payload/config'
 // import Examples from './collections/Examples';
+import { cachePlugin } from 'payload-redis-cache'
 import Users from './collections/Users'
 
 export default buildConfig({
@@ -18,5 +19,6 @@ export default buildConfig({
   },
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
-  }
+  },
+  plugins: [cachePlugin({})]
 })
