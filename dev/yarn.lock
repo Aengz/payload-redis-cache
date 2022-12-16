@@ -6814,6 +6814,10 @@ pause@0.0.1:
   resolved "https://registry.yarnpkg.com/pause/-/pause-0.0.1.tgz#1d408b3fdb76923b9543d96fb4c9dfd535d9cb5d"
   integrity sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==
 
+payload-redis-cache@../payload-redis-cache-1.0.0.tgz:
+  version "1.0.0"
+  resolved "../payload-redis-cache-1.0.0.tgz#0faf1df4e91a8155a80e2ea4d120fafff32d5808"
+
 payload@^1.3.0:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/payload/-/payload-1.3.3.tgz#b5cdfc412e97b62900a5cdfcd7184ef921c3e602"
