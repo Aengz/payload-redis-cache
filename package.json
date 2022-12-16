@@ -2,7 +2,7 @@
   "name": "payload-redis-cache",
   "description": "Redis cache plugin for Payload CMS",
   "version": "1.0.0",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "cd ./dev && yarn dev",
