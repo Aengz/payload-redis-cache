@@ -6,7 +6,7 @@ import type { PluginOptions } from './types'
 
 interface ExtendWebpackConfigArgs {
   config: Config
-  options: PluginOptions
+  options?: PluginOptions
 }
 
 export const extendWebpackConfig =

@@ -1,5 +1,5 @@
 import path from 'path'
-import { cachePlugin, extendWebpackConfig } from 'payload-redis-cache'
+import { cachePlugin } from 'payload-redis-cache'
 import { buildConfig } from 'payload/config'
 import Examples from './collections/Examples'
 import Users from './collections/Users'
@@ -17,20 +17,18 @@ export default buildConfig({
       })
       return {
         ...webpackConfig,
-        ...extendWebpackConfig
-        // resolve: {
-        //   ...webpackConfig.resolve,
-        //   alias: {
-        //     ...webpackConfig.resolve.alias
-        //     // [adaptersPath]: adaptersMock
-        //   },
-        //   fallback: {
-        //     fs: false,
-        //     net: false,
-        //     crypto: false,
-        //     browser: false
-        //   }
-        // }
+        resolve: {
+          ...webpackConfig.resolve,
+          alias: {
+            ...webpackConfig.resolve.alias
+          },
+          fallback: {
+            fs: false,
+            net: false,
+            crypto: false,
+            browser: false
+          }
+        }
       }
     }
   },
