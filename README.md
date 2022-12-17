@@ -1,8 +1,15 @@
-# test
+# Payload Redis Cache
 
-This project was created using create-payload-app using the ts-blank template.
+## Build the lib 
+```
+yarn build
+```
 
-# Dev testing library
+## Testing the lib
 
-Build the lib `yarn build &&  yarn link`
-Test on the dev project ` cd dev && yarn link payload-redis-cache && PAYLOAD_SECRET=secret MONGODB_URI=mongodb://localhost:27117/dev yarn dev`
+Rename .env.example to .env
+
+```
+cd dev
+yarn dev:build
+```
