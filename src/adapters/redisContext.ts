@@ -7,6 +7,7 @@ class RedisContext {
   public getRedisClient(url: string): RedisClientType {
     if (!this.redisClient) {
       this.redisClient = createClient({ url })
+      this.redisClient.connect()
     }
     return this.redisClient
   }
