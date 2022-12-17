@@ -2,7 +2,7 @@
 
 ## Build the lib 
 ```
-yarn build
+yarn dev:build
 ```
 
 ## Testing the lib
@@ -11,5 +11,5 @@ Rename .env.example to .env
 
 ```
 cd dev
-yarn dev:build
+yarn dev
 ```
