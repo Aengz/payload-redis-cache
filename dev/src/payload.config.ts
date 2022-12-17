@@ -9,6 +9,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     webpack: (webpackConfig) => {
+      console.log(webpackConfig)
       webpackConfig.module.rules.push({
         test: /\.m?js/,
         resolve: {
@@ -18,16 +19,17 @@ export default buildConfig({
       return {
         ...webpackConfig,
         resolve: {
-          ...webpackConfig.resolve,
+          ...(webpackConfig.resolve || {}),
           alias: {
-            ...webpackConfig.resolve.alias
-          },
-          fallback: {
-            fs: false,
-            net: false,
-            crypto: false,
-            browser: false
+            ...(webpackConfig.resolve.alias || {}),
+            react: path.resolve(__dirname, '../node_modules/react')
           }
+          // fallback: {
+          //   fs: false,
+          //   net: false,
+          //   crypto: false,
+          //   browser: false
+          // }
         }
       }
     }
