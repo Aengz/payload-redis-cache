@@ -11,7 +11,7 @@ export const generateCacheHash = (requestedUrl: string): string => {
 export const getCacheItem = async <T = {}>(
   redisURL: string,
   requestedUrl: string
-): Promise<T | null> => {
+): Promise<string | null> => {
   const redisClient = redisContext.getRedisClient(redisURL)
   const hash = generateCacheHash(requestedUrl)
   const jsonData = await redisClient.GET(hash)
@@ -20,7 +20,6 @@ export const getCacheItem = async <T = {}>(
     return null
   }
   console.log('<< Get Cache [OK]', requestedUrl)
-  return JSON.parse(jsonData) as T
 }
 
 export const setCacheItem = <T>(redisURL: string, requestedUrl: string, paginatedDocs: T): void => {

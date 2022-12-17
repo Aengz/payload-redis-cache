@@ -9,14 +9,14 @@ export const cachePlugin =
     const { redisURL: redisUrl } = pluginOptions
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
-      const afterChange = [...(hooks?.afterChange || []), upsertCacheHook(redisUrl)]
+      const afterRead = [...(hooks?.afterRead || []), upsertCacheHook(redisUrl)]
       const beforeOperation = [...(hooks?.beforeOperation || []), getCacheHook(redisUrl)]
 
       return {
         ...collection,
         hooks: {
           ...hooks,
-          afterChange,
+          afterRead,
           beforeOperation
         }
       }

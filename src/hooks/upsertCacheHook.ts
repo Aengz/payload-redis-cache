@@ -5,8 +5,6 @@ export const upsertCacheHook =
   (redisUrl: string): CollectionAfterChangeHook =>
   ({ doc, req }) => {
     const { originalUrl } = req
-    console.log('upsert cache')
-
     // invalidate cache
     invalidateCache(redisUrl)
     // set new cache
