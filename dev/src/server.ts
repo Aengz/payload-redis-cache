@@ -7,7 +7,8 @@ dotenv.config()
 const app = express()
 
 // Main middleware
-app.use(cacheMiddleware('users'))
+
+app.use(cacheMiddleware)
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {

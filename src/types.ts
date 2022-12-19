@@ -8,3 +8,5 @@ export interface JwtToken {
   collection: string
   email: string
 }
+
+export const DEFAULT_USER_COLLECTION = 'loggedout'
