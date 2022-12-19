@@ -1,5 +1,4 @@
-import crypto from 'crypto'
-import { redisContext } from './redisContext'
+import { crypto, IRedisContext } from '../adapters'
 
 const CACHE_INDEXES = 'payload-cache-index'
 
@@ -9,10 +8,10 @@ export const generateCacheHash = (requestedUrl: string): string => {
 }
 
 export const getCacheItem = async <T = {}>(
-  redisURL: string,
+  redisContext: IRedisContext,
   requestedUrl: string
 ): Promise<string | null> => {
-  const redisClient = redisContext.getRedisClient(redisURL)
+  const redisClient = redisContext.getRedisClient()
   const hash = generateCacheHash(requestedUrl)
   const jsonData = await redisClient.GET(hash)
   if (!jsonData) {
@@ -20,10 +19,15 @@ export const getCacheItem = async <T = {}>(
     return null
   }
   console.log('<< Get Cache [OK]', requestedUrl)
+  return jsonData
 }
 
-export const setCacheItem = <T>(redisURL: string, requestedUrl: string, paginatedDocs: T): void => {
-  const redisClient = redisContext.getRedisClient(redisURL)
+export const setCacheItem = <T>(
+  redisContext: IRedisContext,
+  requestedUrl: string,
+  paginatedDocs: T
+): void => {
+  const redisClient = redisContext.getRedisClient()
   const hash = generateCacheHash(requestedUrl)
   console.log('>> Set Cache Item', requestedUrl)
 
@@ -37,8 +41,8 @@ export const setCacheItem = <T>(redisURL: string, requestedUrl: string, paginate
   }
 }
 
-export const invalidateCache = async (redisURL: string): Promise<void> => {
-  const redisClient = redisContext.getRedisClient(redisURL)
+export const invalidateCache = async (redisContext: IRedisContext): Promise<void> => {
+  const redisClient = redisContext.getRedisClient()
   const indexes = await redisClient.SMEMBERS(CACHE_INDEXES)
   indexes.forEach((index) => {
     redisClient.DEL(index)

@@ -1,3 +1,4 @@
 export interface PluginOptions {
-  redisURL: string
+  redisUrl: string
+  redisNamespace?: string
 }

@@ -1,12 +1,17 @@
+import { first } from 'lodash'
 import { CollectionAfterChangeHook } from 'payload/types'
-import { invalidateCache, setCacheItem } from '../adapters'
+import { IRedisContext } from '../adapters'
+import { invalidateCache, setCacheItem } from '../helpers'
 
 export const upsertCacheHook =
-  (redisUrl: string): CollectionAfterChangeHook =>
+  (redisContext: IRedisContext): CollectionAfterChangeHook =>
   ({ doc, req }) => {
     const { originalUrl } = req
     // invalidate cache
-    invalidateCache(redisUrl)
+    invalidateCache(redisContext)
+
+    const splitted = first(originalUrl.split('?')) // TODO check depth ecc...
+
     // set new cache
-    setCacheItem(redisUrl, originalUrl, doc)
+    setCacheItem(redisContext, splitted, doc)
   }
