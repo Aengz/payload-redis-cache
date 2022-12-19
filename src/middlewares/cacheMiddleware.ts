@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express'
 import { isNil } from 'lodash'
 import payload from 'payload'
 import { PayloadRequest } from 'payload/types'
-import { extractToken, getTokenPayload } from '../adapters/JwtHelpers'
+import { extractToken, getTokenPayload } from '../adapters'
 import { getCacheItem } from '../helpers'
 
 export const cacheMiddleware =
