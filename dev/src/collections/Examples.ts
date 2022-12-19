@@ -6,6 +6,13 @@ const Examples: CollectionConfig = {
   admin: {
     useAsTitle: 'someField'
   },
+  hooks: {
+    afterRead: [
+      () => {
+        console.log('>> Reading from DB')
+      }
+    ]
+  },
   fields: [
     {
       name: 'someField',

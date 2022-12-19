@@ -11,6 +11,10 @@ services:
       - data:/data/db
     logging:
       driver: none
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
 volumes:
   data:

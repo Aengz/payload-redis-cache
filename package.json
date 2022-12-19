@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "cd ./dev && yarn dev",
     "build": "tsc",
-    "dev:build": "yarn build && yarn link && cd dev && yarn link payload-redis-cache"
+    "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache"
   },
   "peerDependencies": {
     "payload": "^1.3.0",
