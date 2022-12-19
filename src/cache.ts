@@ -8,11 +8,13 @@ export const cachePlugin =
   (pluginOptions: PluginOptions) =>
   (config: Config): Config => {
     const { redisUrl } = pluginOptions
+    // Redis connection
+    redisContext.init(redisUrl)
+
+    // apply to all collections
+    // TODO use an array of collections intead of using all of them
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
-
-      // Redis connection
-      redisContext.init(redisUrl)
 
       const afterChange = [...(hooks?.afterChange || []), upsertCacheHook]
 

@@ -24,24 +24,33 @@ export const getCacheItem = async (requestedUrl: string): Promise<string | null>
 
 export const setCacheItem = <T>(requestedUrl: string, paginatedDocs: T): void => {
   const redisClient = redisContext.getRedisClient()
-  const hash = generateCacheHash(requestedUrl)
-  console.log('>> Set Cache Item', requestedUrl)
+  if (redisClient) {
+    const hash = generateCacheHash(requestedUrl)
+    console.log('>> Set Cache Item', requestedUrl)
 
-  try {
-    const data = JSON.stringify(paginatedDocs)
+    try {
+      const data = JSON.stringify(paginatedDocs)
 
-    redisClient.SET(hash, data)
-    redisClient.SADD(CACHE_INDEXES, hash)
-  } catch (e) {
-    console.log(`Unable to set cache for ${requestedUrl}`)
+      redisClient.SET(hash, data)
+      redisClient.SADD(CACHE_INDEXES, hash)
+      return
+    } catch (e) {
+      //
+    }
   }
+
+  console.log(`Unable to set cache for ${requestedUrl}`)
 }
 
 export const invalidateCache = async (): Promise<void> => {
   const redisClient = redisContext.getRedisClient()
-  const indexes = await redisClient.SMEMBERS(CACHE_INDEXES)
-  indexes.forEach((index) => {
-    redisClient.DEL(index)
-    redisClient.SREM(CACHE_INDEXES, index)
-  })
+  if (redisClient) {
+    const indexes = await redisClient.SMEMBERS(CACHE_INDEXES)
+    indexes.forEach((index) => {
+      redisClient.DEL(index)
+      redisClient.SREM(CACHE_INDEXES, index)
+    })
+    return
+  }
+  console.log('Unable to inva;lidate cache')
 }
