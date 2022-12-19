@@ -1,4 +1,4 @@
-import { crypto, IRedisContext } from '../adapters'
+import { crypto, redisContext } from '../adapters'
 
 const CACHE_INDEXES = 'payload-cache-index'
 
@@ -7,26 +7,22 @@ export const generateCacheHash = (requestedUrl: string): string => {
   return `payload:${pathHash}`
 }
 
-export const getCacheItem = async <T = {}>(
-  redisContext: IRedisContext,
-  requestedUrl: string
-): Promise<string | null> => {
+export const getCacheItem = async (requestedUrl: string): Promise<string | null> => {
   const redisClient = redisContext.getRedisClient()
-  const hash = generateCacheHash(requestedUrl)
-  const jsonData = await redisClient.GET(hash)
-  if (!jsonData) {
-    console.log('<< Get Cache [MISS]', requestedUrl)
-    return null
+  if (redisClient) {
+    const hash = generateCacheHash(requestedUrl)
+    const jsonData = await redisClient.GET(hash)
+    if (!jsonData) {
+      console.log('<< Get Cache [MISS]', requestedUrl)
+      return null
+    }
+    console.log('<< Get Cache [OK]', requestedUrl)
+    return jsonData
   }
-  console.log('<< Get Cache [OK]', requestedUrl)
-  return jsonData
+  return null
 }
 
-export const setCacheItem = <T>(
-  redisContext: IRedisContext,
-  requestedUrl: string,
-  paginatedDocs: T
-): void => {
+export const setCacheItem = <T>(requestedUrl: string, paginatedDocs: T): void => {
   const redisClient = redisContext.getRedisClient()
   const hash = generateCacheHash(requestedUrl)
   console.log('>> Set Cache Item', requestedUrl)
@@ -41,7 +37,7 @@ export const setCacheItem = <T>(
   }
 }
 
-export const invalidateCache = async (redisContext: IRedisContext): Promise<void> => {
+export const invalidateCache = async (): Promise<void> => {
   const redisClient = redisContext.getRedisClient()
   const indexes = await redisClient.SMEMBERS(CACHE_INDEXES)
   indexes.forEach((index) => {

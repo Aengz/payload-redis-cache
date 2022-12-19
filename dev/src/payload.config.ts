@@ -1,7 +1,6 @@
 import path from 'path'
-// import { cachePlugin } from 'payload-redis-cache'
+import { cachePlugin } from 'payload-redis-cache'
 import { buildConfig } from 'payload/config'
-import { cachePlugin } from '../../src'
 import Examples from './collections/Examples'
 import Users from './collections/Users'
 

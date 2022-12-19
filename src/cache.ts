@@ -1,6 +1,6 @@
 import { Config } from 'payload/config'
-import { getRedisContext } from './adapters'
-import { getCacheHook, upsertCacheHook } from './hooks'
+import { redisContext } from './adapters'
+import { upsertCacheHook } from './hooks'
 import { PluginOptions } from './types'
 import { extendWebpackConfig } from './webpack'
 
@@ -11,17 +11,16 @@ export const cachePlugin =
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
 
-      const redisContext = getRedisContext(redisUrl)
+      // Redis connection
+      redisContext.init(redisUrl)
 
-      const afterChange = [...(hooks?.afterChange || []), upsertCacheHook(redisContext)]
-      const beforeOperation = [...(hooks?.beforeOperation || []), getCacheHook(redisContext)]
+      const afterChange = [...(hooks?.afterChange || []), upsertCacheHook]
 
       return {
         ...collection,
         hooks: {
           ...hooks,
-          afterChange,
-          beforeOperation
+          afterChange
         }
       }
     })

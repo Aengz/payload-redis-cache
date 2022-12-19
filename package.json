@@ -12,7 +12,9 @@
   },
   "peerDependencies": {
     "payload": "^1.3.0",
-    "redis": "^4.5.1"
+    "redis": "^4.5.1",
+    "jwt-decode": "^3.1.2",
+    "cookie": "0.5.0"
   },
   "files": [
     "dist",
@@ -30,6 +32,8 @@
     "payload": "^1.3.0",
     "redis": "^4.5.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "jwt-decode": "^3.1.2",
+    "cookie": "0.5.0"
   }
 }

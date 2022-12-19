@@ -6,20 +6,18 @@ export interface IRedisContext {
 
 class RedisContext implements IRedisContext {
   private redisClient: RedisClientType
-  private url: string
 
-  public constructor(url: string) {
-    this.url = url
+  public init(url: string) {
+    if (!this.redisClient) {
+      this.redisClient = createClient({ url })
+      this.redisClient.connect()
+    }
   }
 
   //getter
   public getRedisClient(): RedisClientType {
-    if (!this.redisClient) {
-      this.redisClient = createClient({ url: this.url })
-      this.redisClient.connect()
-    }
     return this.redisClient
   }
 }
 
-export const getRedisContext = (url: string) => new RedisContext(url)
+export const redisContext = new RedisContext()
