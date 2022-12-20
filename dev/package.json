@@ -1,5 +1,5 @@
 {
-  "name": "payload-redis-cache",
+  "name": "payload-redis-cache-dev",
   "version": "1.0.0",
   "main": "dist/server.js",
   "license": "MIT",
