@@ -1,5 +1,5 @@
 import { Config } from 'payload/config'
-import { initRedis } from './helpers'
+import { getPluginConfig, initRedis } from './helpers'
 import { invalidateCacheHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
@@ -8,9 +8,15 @@ import { extendWebpackConfig } from './webpack'
 export const cachePlugin =
   (pluginOptions: PluginOptions) =>
   (config: Config): Config => {
-    const { redisUrl } = pluginOptions
+    // Merge incoming plugin options with the default ones
+    const { redisUrl, redisNamespace, redisIndexesName } = getPluginConfig(pluginOptions)
+
     // Redis connection
-    initRedis(redisUrl)
+    initRedis({
+      url: redisUrl,
+      namespace: redisNamespace,
+      indexesName: redisIndexesName
+    })
 
     // apply to all collections
     // TODO use an array of collections intead of using all of them
