@@ -1,7 +1,25 @@
 {
   "name": "payload-redis-cache",
   "description": "Redis cache plugin for Payload CMS",
-  "version": "1.0.0",
+  "engines": {
+    "node": ">=14",
+    "yarn": ">=1.22 <2"
+  },
+  "author": {
+    "email": "info@aengz.com",
+    "name": "AEngz"
+  },
+  "maintainers": [
+    {
+      "name": "Marco Sangalli",
+      "email": "marco@aengz.com"
+    },
+    {
+      "name": "Daniele Deluis",
+      "email": "daniele@aengz.com"
+    }
+  ],
+  "version": "0.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
