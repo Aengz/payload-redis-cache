@@ -1,6 +1,7 @@
 import { Config } from 'payload/config'
-import { getRedisContext } from './adapters'
-import { getCacheHook, upsertCacheHook } from './hooks'
+import { initRedis } from './helpers'
+import { invalidateCacheHook } from './hooks'
+import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
 import { extendWebpackConfig } from './webpack'
 
@@ -8,20 +9,21 @@ export const cachePlugin =
   (pluginOptions: PluginOptions) =>
   (config: Config): Config => {
     const { redisUrl } = pluginOptions
+    // Redis connection
+    initRedis(redisUrl)
+
+    // apply to all collections
+    // TODO use an array of collections intead of using all of them
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
 
-      const redisContext = getRedisContext(redisUrl)
-
-      const afterChange = [...(hooks?.afterChange || []), upsertCacheHook(redisContext)]
-      const beforeOperation = [...(hooks?.beforeOperation || []), getCacheHook(redisContext)]
+      const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
 
       return {
         ...collection,
         hooks: {
           ...hooks,
-          afterChange,
-          beforeOperation
+          afterChange
         }
       }
     })
@@ -32,6 +34,9 @@ export const cachePlugin =
         ...(config.admin || {}),
         webpack: extendWebpackConfig({ config })
       },
-      collections
+      collections,
+      express: {
+        preMiddleware: [...(config?.express?.preMiddleware || []), cacheMiddleware]
+      }
     }
   }

@@ -1,2 +1,2 @@
-export * from './getCacheHook'
+export * from './invalidateCacheHook'
 export * from './upsertCacheHook'

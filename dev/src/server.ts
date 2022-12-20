@@ -16,7 +16,7 @@ payload.init({
   mongoURL: process.env.MONGODB_URI || '',
   express: app,
   onInit: () => {
-    payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+    console.log(`Payload Admin URL: ${payload.getAdminURL()}`)
   }
 })
 

@@ -1,17 +1,23 @@
-import { first } from 'lodash'
-import { CollectionAfterChangeHook } from 'payload/types'
-import { IRedisContext } from '../adapters'
-import { invalidateCache, setCacheItem } from '../helpers'
+import { CollectionAfterReadHook, PayloadRequest } from 'payload/types'
+import { setCacheItem } from '../helpers'
+import { DEFAULT_USER_COLLECTION } from '../types'
 
-export const upsertCacheHook =
-  (redisContext: IRedisContext): CollectionAfterChangeHook =>
-  ({ doc, req }) => {
-    const { originalUrl } = req
-    // invalidate cache
-    invalidateCache(redisContext)
+// internal user lookup has a cookie but not an user
+export const isInternalLookup = (req: PayloadRequest) => {
+  const {
+    headers: { cookie },
+    user
+  } = req
+  return !user && cookie
+}
 
-    const splitted = first(originalUrl.split('?')) // TODO check depth ecc...
+export const upsertCacheHook: CollectionAfterReadHook = ({ doc, req }) => {
+  const { originalUrl, user } = req
+  const userCollection = user ? user.collection : DEFAULT_USER_COLLECTION
 
-    // set new cache
-    setCacheItem(redisContext, splitted, doc)
+  // Keep the original URL no split needed
+  if (!isInternalLookup(req)) {
+    setCacheItem(userCollection, originalUrl, doc)
   }
+  return doc
+}

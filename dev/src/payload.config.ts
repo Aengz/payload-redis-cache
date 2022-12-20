@@ -1,7 +1,6 @@
 import path from 'path'
-// import { cachePlugin } from 'payload-redis-cache'
+import { cachePlugin } from 'payload-redis-cache'
 import { buildConfig } from 'payload/config'
-import { cachePlugin } from '../../src'
 import Examples from './collections/Examples'
 import Users from './collections/Users'
 
@@ -25,12 +24,6 @@ export default buildConfig({
             ...(webpackConfig.resolve.alias || {}),
             react: path.resolve(__dirname, '../node_modules/react')
           }
-          // fallback: {
-          //   fs: false,
-          //   net: false,
-          //   crypto: false,
-          //   browser: false
-          // }
         }
       }
     }
@@ -42,5 +35,7 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
   },
-  plugins: [cachePlugin({ redisUrl: process.env.REDIS_URI })]
+  plugins: [
+    cachePlugin({ redisUrl: process.env.REDIS_URI }) // ADD HERE
+  ]
 })
