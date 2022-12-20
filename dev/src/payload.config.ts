@@ -41,5 +41,7 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
   },
-  plugins: [cachePlugin({ redisUrl: process.env.REDIS_URI })]
+  plugins: [
+    cachePlugin({ redisUrl: process.env.REDIS_URI }) // ADD HERE
+  ]
 })

@@ -1,6 +1,7 @@
 import { Config } from 'payload/config'
 import { initRedis } from './helpers'
-import { invalidateCacheHook, upsertCacheHook } from './hooks'
+import { invalidateCacheHook } from './hooks'
+import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
 import { extendWebpackConfig } from './webpack'
 
@@ -16,14 +17,12 @@ export const cachePlugin =
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
 
-      const afterRead = [...(hooks?.afterRead || []), upsertCacheHook]
       const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
 
       return {
         ...collection,
         hooks: {
           ...hooks,
-          afterRead,
           afterChange
         }
       }
@@ -35,6 +34,9 @@ export const cachePlugin =
         ...(config.admin || {}),
         webpack: extendWebpackConfig({ config })
       },
-      collections
+      collections,
+      express: {
+        preMiddleware: [...(config?.express?.preMiddleware || []), cacheMiddleware]
+      }
     }
   }
