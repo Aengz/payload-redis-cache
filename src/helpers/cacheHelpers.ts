@@ -17,10 +17,10 @@ export const getCacheItem = async (
     const hash = generateCacheHash(userCollection, requestedUrl)
     const jsonData = await redisClient.GET(hash)
     if (!jsonData) {
-      console.log('<< Get Cache [MISS]', requestedUrl)
+      console.log('<< Get Cache [MISS]', requestedUrl, userCollection)
       return null
     }
-    console.log('<< Get Cache [OK]', requestedUrl)
+    console.log('<< Get Cache [OK]', requestedUrl, userCollection)
     return jsonData
   }
   return null
@@ -34,7 +34,7 @@ export const setCacheItem = <T>(
   const redisClient = redisContext.getRedisClient()
   if (redisClient) {
     const hash = generateCacheHash(userCollection, requestedUrl)
-    console.log('>> Set Cache Item', requestedUrl)
+    console.log('>> Set Cache Item', requestedUrl, userCollection)
 
     try {
       const data = JSON.stringify(paginatedDocs)
