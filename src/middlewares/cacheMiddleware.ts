@@ -25,7 +25,6 @@ export const cacheMiddleware = async (req: PayloadRequest, res: Response, next: 
     const token = extractToken(cookie)
     if (token) {
       const tokenData = getTokenPayload(token)
-      console.log(tokenData)
       userCollection = tokenData.collection
     }
   }
