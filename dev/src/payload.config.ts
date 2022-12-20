@@ -24,12 +24,6 @@ export default buildConfig({
             ...(webpackConfig.resolve.alias || {}),
             react: path.resolve(__dirname, '../node_modules/react')
           }
-          // fallback: {
-          //   fs: false,
-          //   net: false,
-          //   crypto: false,
-          //   browser: false
-          // }
         }
       }
     }
