@@ -1,5 +1,6 @@
+// crypto
 export const crypto = () => {}
-export const getRedisContext = () => {}
-export const extractToken = () => {}
-export const getTokenPayload = () => {}
+
+// redis
+export const redisContext = () => {}
 export const initContext = () => {}

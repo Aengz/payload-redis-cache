@@ -1,6 +1,7 @@
 export interface PluginOptions {
   redisUrl: string
   redisNamespace?: string
+  redisIndexesName?: string
 }
 
 export interface JwtToken {

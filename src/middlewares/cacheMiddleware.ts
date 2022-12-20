@@ -1,12 +1,7 @@
 import { NextFunction, Response } from 'express'
 import { PayloadRequest } from 'payload/types'
-import { extractToken, getTokenPayload } from '../adapters'
-import { getCacheItem, setCacheItem } from '../helpers'
+import { extractToken, getCacheItem, getTokenPayload, hasValidPath, setCacheItem } from '../helpers'
 import { DEFAULT_USER_COLLECTION } from '../types'
-
-function hasValidPath(url: string): boolean {
-  return url.includes(`/api/`)
-}
 
 export const cacheMiddleware = async (req: PayloadRequest, res: Response, next: NextFunction) => {
   // try to match the cache and return immediately
