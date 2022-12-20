@@ -1,4 +1,4 @@
-import { crypto, initContext, InitRedisContextParams, redisContext } from '../adapters'
+import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../adapters'
 
 export const generateCacheHash = (userCollection: string, requestedUrl: string): string => {
   const requestUrlAndUserCollection = `${userCollection}-${requestedUrl}`
@@ -69,6 +69,6 @@ export const invalidateCache = async (): Promise<void> => {
   console.log('Cache Invalidated')
 }
 
-export const initRedis = (params: InitRedisContextParams) => {
-  initContext(params)
+export const initCache = (params: InitRedisContextParams) => {
+  initRedisContext(params)
 }

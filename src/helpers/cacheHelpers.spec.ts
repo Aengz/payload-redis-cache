@@ -1,5 +1,11 @@
-import { crypto, redisContext } from '../adapters'
-import { generateCacheHash, getCacheItem, invalidateCache, setCacheItem } from './cacheHelpers'
+import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../adapters'
+import {
+  generateCacheHash,
+  getCacheItem,
+  initCache,
+  invalidateCache,
+  setCacheItem
+} from './cacheHelpers'
 
 jest.mock('../adapters')
 
@@ -177,6 +183,23 @@ describe('cacheHelpers', () => {
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(redisClientMock)
 
       await expect(invalidateCache()).rejects.toThrow('Error getting cache indexes')
+    })
+  })
+  describe('initCache', () => {
+    it('should initialize the Redis context with the given parameters', () => {
+      const params: InitRedisContextParams = {
+        url: 'redis://localhost:6379',
+        namespace: 'payload',
+        indexesName: 'indexes'
+      }
+
+      // Mock the initRedisContext function to verify that it is called with the correct parameters
+      const getRedisClientMock = (<jest.Mock>initRedisContext).mockImplementation(() => {})
+
+      initCache(params)
+
+      // Assert that the initRedisContext function was called with the correct parameters
+      expect(getRedisClientMock).toHaveBeenCalledWith(params)
     })
   })
 })
