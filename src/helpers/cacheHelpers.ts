@@ -1,4 +1,4 @@
-import { crypto, redisContext } from '../adapters'
+import { crypto, initContext, redisContext } from '../adapters'
 
 const CACHE_INDEXES = 'payload-cache-index'
 
@@ -60,5 +60,9 @@ export const invalidateCache = async (): Promise<void> => {
     })
     return
   }
-  console.log('Unable to inva;lidate cache')
+  console.log('Unable to invalidate cache')
+}
+
+export const initRedis = (url: string) => {
+  initContext(url)
 }
