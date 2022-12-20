@@ -32,7 +32,7 @@ export const cacheMiddleware = async (req: PayloadRequest, res: Response, next: 
   // Try to get the cached item
   const cacheData = await getCacheItem(userCollection, originalUrl)
   if (cacheData) {
-    return res.json(JSON.parse(cacheData))
+    return res.setHeader('Content-Type', 'application/json').send(cacheData)
   }
 
   // route to controllers
