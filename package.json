@@ -11,12 +11,8 @@
   },
   "maintainers": [
     {
-      "name": "Marco Sangalli",
-      "email": "marco@aengz.com"
-    },
-    {
-      "name": "Daniele Deluis",
-      "email": "daniele@aengz.com"
+      "email": "info@aengz.com",
+      "name": "AEngz"
     }
   ],
   "version": "0.1.0",
