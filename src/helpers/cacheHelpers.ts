@@ -58,6 +58,7 @@ export const invalidateCache = async (): Promise<void> => {
       redisClient.DEL(index)
       redisClient.SREM(CACHE_INDEXES, index)
     })
+    console.log('Cache Invalidated')
     return
   }
   console.log('Unable to invalidate cache')
