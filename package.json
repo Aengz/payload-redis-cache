@@ -1,5 +1,5 @@
 {
-  "name": "payload-redis-cache",
+  "name": "@aengz/payload-redis-cache",
   "description": "Redis cache plugin for Payload CMS",
   "engines": {
     "node": ">=14",
