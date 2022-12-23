@@ -62,23 +62,4 @@ describe('RedisContext', () => {
       expect(redisContext.getIndexesName()).toBe('indexesName')
     })
   })
-
-  // describe('redisContext', () => {
-  //   it('should set redisClient to null if there is an error creating the client', () => {
-  //     ;(createClient as jest.Mock).mockImplementation(() => {
-  //       throw new Error('Error creating client')
-  //     })
-
-  //     const params = {
-  //       url: 'redis://localhost',
-  //       namespace: 'namespace',
-  //       indexesName: 'indexesName'
-  //     }
-  //     redisContext.init(params)
-
-  //     expect(redisContext.getRedisClient()).toBeNull()
-  //     expect(redisContext.getNamespace()).toBeNull()
-  //     expect(redisContext.getIndexesName()).toBeNull()
-  //   })
-  // })
 })
