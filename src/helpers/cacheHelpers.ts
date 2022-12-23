@@ -1,4 +1,4 @@
-import { crypto, initContext, InitRedisContextParams, redisContext } from '../adapters'
+import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../adapters'
 
 export const generateCacheHash = (userCollection: string, requestedUrl: string): string => {
   const requestUrlAndUserCollection = `${userCollection}-${requestedUrl}`
@@ -69,6 +69,11 @@ export const invalidateCache = async (): Promise<void> => {
   console.log('Cache Invalidated')
 }
 
-export const initRedis = (params: InitRedisContextParams) => {
-  initContext(params)
+// TODO get the routing structure from config.routes.api
+export const hasValidPath = (url: string): boolean => {
+  return url.includes(`/api/`)
+}
+
+export const initCache = (params: InitRedisContextParams) => {
+  initRedisContext(params)
 }

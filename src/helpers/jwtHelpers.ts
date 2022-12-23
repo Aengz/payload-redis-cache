@@ -14,8 +14,3 @@ export const extractToken = (cookies: string): string | null | undefined => {
 export const getTokenPayload = (token: string): JwtToken => {
   return decode(token)
 }
-
-// TODO get the routing structure from config.routes.api
-export const hasValidPath = (url: string): boolean => {
-  return url.includes(`/api/`)
-}

@@ -43,6 +43,6 @@ class RedisContext implements IRedisContext {
 }
 
 export const redisContext = new RedisContext()
-export const initContext = (params: InitRedisContextParams) => {
+export const initRedisContext = (params: InitRedisContextParams) => {
   redisContext.init(params)
 }
