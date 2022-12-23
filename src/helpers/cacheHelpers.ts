@@ -69,6 +69,11 @@ export const invalidateCache = async (): Promise<void> => {
   console.log('Cache Invalidated')
 }
 
+// TODO get the routing structure from config.routes.api
+export const hasValidPath = (url: string): boolean => {
+  return url.includes(`/api/`)
+}
+
 export const initCache = (params: InitRedisContextParams) => {
   initRedisContext(params)
 }

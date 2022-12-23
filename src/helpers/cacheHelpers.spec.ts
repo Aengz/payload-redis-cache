@@ -2,6 +2,7 @@ import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '
 import {
   generateCacheHash,
   getCacheItem,
+  hasValidPath,
   initCache,
   invalidateCache,
   setCacheItem
@@ -185,6 +186,19 @@ describe('cacheHelpers', () => {
       await expect(invalidateCache()).rejects.toThrow('Error getting cache indexes')
     })
   })
+
+  describe('hasValidPath', () => {
+    it('should return true for a URL with a valid path', () => {
+      const url = 'https://example.com/api/users'
+      expect(hasValidPath(url)).toBeTruthy()
+    })
+
+    it('should return false for a URL with an invalid path', () => {
+      const url = 'https://example.com/login'
+      expect(hasValidPath(url)).toBeFalsy()
+    })
+  })
+
   describe('initCache', () => {
     it('should initialize the Redis context with the given parameters', () => {
       const params: InitRedisContextParams = {
