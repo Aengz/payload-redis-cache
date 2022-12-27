@@ -22,7 +22,7 @@ npm install @aengz/payload-redis-cache
 
 Install this plugin within your Payload config as follows:
 
-```ts
+```js
 import { buildConfig } from 'payload/config';
 import { cachePlugin } from '@aengz/payload-redis-cache'
 
