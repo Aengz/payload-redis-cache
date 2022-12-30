@@ -12,12 +12,21 @@ Cache is based on user.collection + originalUrl
 ## Installation
 ```console
 yarn add @aengz/payload-redis-cache
-yarn add redis // if not installed yet
 ```
 or
 ```console
 npm install @aengz/payload-redis-cache
-npm install redis // if not installed yet
+```
+
+### Redis package
+You also need the redis package if not yet installed
+
+```console
+yarn add redis
+```
+or
+```console
+npm install redis
 ```
 
 ## Usage
