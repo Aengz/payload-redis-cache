@@ -3,4 +3,4 @@ export const crypto = () => {}
 
 // redis
 export const redisContext = () => {}
-export const initContext = () => {}
+export const initRedisContext = () => {}
