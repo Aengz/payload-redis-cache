@@ -15,6 +15,13 @@
       "name": "AEngz"
     }
   ],
+  "repository": "@aengz/payload-redis-cache",
+  "keywords": [
+    "payload",
+    "plugin",
+    "cache",
+    "redis"
+  ],
   "version": "0.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
