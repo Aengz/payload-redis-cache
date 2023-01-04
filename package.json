@@ -15,7 +15,10 @@
       "name": "AEngz"
     }
   ],
-  "repository": "@aengz/payload-redis-cache",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aengz/payload-redis-cache"
+  },
   "keywords": [
     "payload",
     "plugin",
