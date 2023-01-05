@@ -1,8 +1,7 @@
 # Payload Redis Cache Plugin
 
-A plugin for [Payload CMS](https://github.com/payloadcms/payload)  to add a cache layer to the API endpoints.
-
-Cache is based on user.collection + originalUrl
+This plugin for [Payload CMS](https://github.com/payloadcms/payload) adds a cache layer to API endpoints.
+The cache is based on the combination of the user's collection and the original URL.
 
 ### Requirements
 
@@ -10,6 +9,8 @@ Cache is based on user.collection + originalUrl
 - A [Redis](https://redis.io/) instance is required 
 
 ## Installation
+To install the plugin, run one of the following commands:
+
 ```console
 yarn add @aengz/payload-redis-cache
 ```
@@ -19,7 +20,7 @@ npm install @aengz/payload-redis-cache
 ```
 
 ### Redis package
-You also need the redis package if not yet installed
+You also need to install the redis package if it is not already installed:
 
 ```console
 yarn add redis
@@ -31,7 +32,7 @@ npm install redis
 
 ## Usage
 
-Install this plugin within your Payload config as follows:
+To use the plugin, add it to the Payload config as follows:
 
 ```js
 import { buildConfig } from 'payload/config';
@@ -56,16 +57,28 @@ const config = buildConfig({
 
 A * denotes that the property is required.
 
+## Helpers
+
+This package provides utility functions for managing the cache. Here's an example of how to use the invalidateCache function:
+
+
+```js
+import { invalidateCache }  from '@aengz/payload-redis-cache'
+
+...
+
+invalidateCache()
+```
+
 ## Development
-In the repo there is a development environment in the `/dev` directory.
-To use it you need to create a new `.env` file (use the example `.env.example`) in the `/dev` directory.
+There is a development environment in the `/dev` directory of the repository. To use it, create a new `.env` file in the `/dev` directory using the example `.env.example` file as a reference:
 
 ``` console
 cd dev
 cp .env.example .env
 ```
 
-Before use the plugin in the development environment the package needs to be built. 
+Before using the plugin in the development environment, the package needs to be built. To build the library, run one of the following commands:
 ### Build the lib 
 Build the lib using:
 ```console
@@ -77,7 +90,7 @@ npm run dev:build
 ```
 
 ### Use development environment
-To run develoment environment, run:
+To run the development environment, use the following command:
 
 ```console
 yarn dev
@@ -88,7 +101,7 @@ npm run dev
 ```
 
 ### Running test 
-To run the test suite:
+To run the test suite, use one of the following commands:
 ```console
 yarn test
 ```
