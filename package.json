@@ -25,7 +25,7 @@
     "cache",
     "redis"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "dev": "cd ./dev && yarn dev",
     "build": "tsc",
     "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache",
-    "dev:publish": "yarn build && npm publish",
+    "build:publish": "yarn build && yarn publish",
     "test": "jest"
   },
   "peerDependencies": {
