@@ -20,7 +20,7 @@ export const cacheMiddleware =
 
     const collectionName = getCollectionName(apiBaseUrl, originalUrl)
 
-    // not a valid path of method is not a GET skip all
+    // If the collection name cannot be detected or the method is not "GET" then call next()
     if (!collectionName || !includedCollections.includes(collectionName) || req.method !== 'GET') {
       return next()
     }
