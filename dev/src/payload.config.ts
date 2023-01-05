@@ -1,5 +1,5 @@
+import { cachePlugin } from '@aengz/payload-redis-cache'
 import path from 'path'
-import { cachePlugin } from 'payload-redis-cache'
 import { buildConfig } from 'payload/config'
 import Examples from './collections/Examples'
 import Users from './collections/Users'
