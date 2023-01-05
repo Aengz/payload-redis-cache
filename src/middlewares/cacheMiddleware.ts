@@ -35,14 +35,13 @@ export const cacheMiddleware =
       }
     }
 
-    // TODO find a better way, mega HACK
+    // TODO find a better way
     const json = res.json
     res.json = (body) => {
       res.json = json
       setCacheItem(userCollection, originalUrl, body)
       return res.json(body)
     }
-    // mega HACK
 
     // Try to get the cached item
     const cacheData = await getCacheItem(userCollection, originalUrl)
