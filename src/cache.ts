@@ -14,7 +14,7 @@ export const cachePlugin =
       redisUrl,
       redisNamespace = 'payload',
       redisIndexesName = 'payload-cache-index',
-      excludedCollections
+      excludedCollections = []
     } = pluginOptions
 
     // Redis connection
