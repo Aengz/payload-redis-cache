@@ -41,7 +41,8 @@ import { cachePlugin } from '@aengz/payload-redis-cache'
 const config = buildConfig({
   plugins: [
     cachePlugin({ 
-      redisUrl: 'redis://localhost:6379' 
+      redisUrl: 'redis://localhost:6379' ,
+      excludedCollections: ['users']
     })
   ]
 })
