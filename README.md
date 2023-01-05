@@ -41,7 +41,8 @@ import { cachePlugin } from '@aengz/payload-redis-cache'
 const config = buildConfig({
   plugins: [
     cachePlugin({ 
-      redisUrl: 'redis://localhost:6379' 
+      redisUrl: 'redis://localhost:6379' ,
+      excludedCollections: ['users']
     })
   ]
 })
@@ -54,6 +55,7 @@ const config = buildConfig({
 | `redisUrl` * | `string` | Redis instance's url. |
 | `redisNamespace` | `string` | Choose the prefix to use for cache redis keys. Defaults to `payload`. |
 | `redisIndexesName` | `string` | Choose the index key for cache redis indexes. Defaults to `payload-cache-index`. |
+| `excludedCollections` | `string[]` | An array of collection names to be excluded. |
 
 A * denotes that the property is required.
 

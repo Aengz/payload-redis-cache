@@ -1,5 +1,5 @@
 import { Config } from 'payload/config'
-import { getPluginConfig, initCache } from './helpers'
+import { initCache } from './helpers'
 import { invalidateCacheHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
@@ -8,8 +8,14 @@ import { extendWebpackConfig } from './webpack'
 export const cachePlugin =
   (pluginOptions: PluginOptions) =>
   (config: Config): Config => {
+    const includedCollections: string[] = []
     // Merge incoming plugin options with the default ones
-    const { redisUrl, redisNamespace, redisIndexesName } = getPluginConfig(pluginOptions)
+    const {
+      redisUrl,
+      redisNamespace = 'payload',
+      redisIndexesName = 'payload-cache-index',
+      excludedCollections
+    } = pluginOptions
 
     // Redis connection
     initCache({
@@ -22,6 +28,10 @@ export const cachePlugin =
     // TODO use an array of collections intead of using all of them
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
+
+      if (!excludedCollections.includes(collection.slug)) {
+        includedCollections.push(collection.slug)
+      }
 
       const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
 
@@ -42,7 +52,10 @@ export const cachePlugin =
       },
       collections,
       express: {
-        preMiddleware: [...(config?.express?.preMiddleware || []), cacheMiddleware]
+        preMiddleware: [
+          ...(config?.express?.preMiddleware || []),
+          cacheMiddleware(includedCollections, config.routes?.api || '/api')
+        ]
       }
     }
   }

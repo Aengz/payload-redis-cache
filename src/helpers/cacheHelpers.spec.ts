@@ -2,7 +2,7 @@ import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '
 import {
   generateCacheHash,
   getCacheItem,
-  hasValidPath,
+  getCollectionName,
   initCache,
   invalidateCache,
   setCacheItem
@@ -187,18 +187,6 @@ describe('cacheHelpers', () => {
     })
   })
 
-  describe('hasValidPath', () => {
-    it('should return true for a URL with a valid path', () => {
-      const url = 'https://example.com/api/users'
-      expect(hasValidPath(url)).toBeTruthy()
-    })
-
-    it('should return false for a URL with an invalid path', () => {
-      const url = 'https://example.com/login'
-      expect(hasValidPath(url)).toBeFalsy()
-    })
-  })
-
   describe('initCache', () => {
     it('should initialize the Redis context with the given parameters', () => {
       const params: InitRedisContextParams = {
@@ -214,6 +202,24 @@ describe('cacheHelpers', () => {
 
       // Assert that the initRedisContext function was called with the correct parameters
       expect(getRedisClientMock).toHaveBeenCalledWith(params)
+    })
+  })
+
+  describe('getCollectionName', () => {
+    it('returns the correct collection name', () => {
+      const apiBaseUrl = '/api'
+
+      expect(getCollectionName(apiBaseUrl, '/api/users/')).toBe('users')
+      expect(getCollectionName(apiBaseUrl, '/api/posts/')).toBe('posts')
+      expect(getCollectionName(apiBaseUrl, '/api/comments/')).toBe('comments')
+      expect(getCollectionName(apiBaseUrl, '/api/comments/test')).toBe('comments')
+      expect(getCollectionName(apiBaseUrl, '/api/comments?where=1')).toBe('comments')
+    })
+
+    it('returns null for invalid input', () => {
+      const apiBaseUrl = '/api'
+
+      expect(getCollectionName(apiBaseUrl, '/other/comments/')).toBe(null)
     })
   })
 })
