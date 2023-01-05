@@ -33,7 +33,7 @@
     "dev": "cd ./dev && yarn dev",
     "build": "tsc",
     "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache",
-    "dev:publish": "npm publish",
+    "dev:publish": "yarn build && npm publish",
     "test": "jest"
   },
   "peerDependencies": {
