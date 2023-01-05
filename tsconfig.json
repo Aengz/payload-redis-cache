@@ -11,7 +11,7 @@
     "declaration": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "build", "src/**/*.spec.ts"],
+  "exclude": ["node_modules", "dist", "build", "**/*.spec.ts", "**/coverage"],
   "ts-node": {
     "transpileOnly": true
   }

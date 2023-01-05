@@ -59,7 +59,7 @@ A * denotes that the property is required.
 
 ## Helpers
 
-This package provides utility functions for managing the cache. Here's an example of how to use the invalidateCache function:
+This package provides utility functions for managing the cache. Here's an example of how to use the `invalidateCache` function:
 
 
 ```js
