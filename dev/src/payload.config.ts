@@ -36,6 +36,6 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
   },
   plugins: [
-    cachePlugin({ redisUrl: process.env.REDIS_URI }) // ADD HERE
+    cachePlugin({ redisUrl: process.env.REDIS_URI, excludedCollections: ['users'] }) // ADD HERE
   ]
 })

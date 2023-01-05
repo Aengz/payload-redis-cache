@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "cd ./dev && yarn dev",
     "build": "tsc",
-    "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache",
+    "dev:build": "yarn build && yarn link && cd dev && yarn link --force @aengz/payload-redis-cache",
     "build:publish": "yarn build && yarn publish",
     "test": "jest"
   },
