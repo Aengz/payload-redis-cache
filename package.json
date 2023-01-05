@@ -34,7 +34,6 @@
     "build": "tsc",
     "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache",
     "dev:publish": "npm publish",
-    "dev:version:patch": "yarn build && npm version patch && cd dist && npm publish",
     "test": "jest"
   },
   "peerDependencies": {
