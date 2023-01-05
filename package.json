@@ -43,8 +43,7 @@
     "redis": "^4.5.1"
   },
   "files": [
-    "dist",
-    "package.json"
+    "dist"
   ],
   "devDependencies": {
     "@types/cookie": "^0.5.1",
