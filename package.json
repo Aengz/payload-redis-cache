@@ -15,14 +15,17 @@
       "name": "AEngz"
     }
   ],
-  "repository": "@aengz/payload-redis-cache",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aengz/payload-redis-cache"
+  },
   "keywords": [
     "payload",
     "plugin",
     "cache",
     "redis"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
