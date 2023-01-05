@@ -25,7 +25,7 @@
     "cache",
     "redis"
   ],
-  "version": "0.1.2",
+  "version": "0.1.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "dev": "cd ./dev && yarn dev",
     "build": "tsc",
     "dev:build": "yarn build && yarn unlink && yarn link && cd dev && yarn unlink payload-redis-cache && yarn link --force payload-redis-cache",
+    "dev:publish": "npm publish",
     "test": "jest"
   },
   "peerDependencies": {
@@ -43,9 +44,7 @@
   },
   "files": [
     "dist",
-    "*.js",
-    "*.d.ts",
-    "!.prettierrc.js"
+    "package.json"
   ],
   "devDependencies": {
     "@types/cookie": "^0.5.1",
