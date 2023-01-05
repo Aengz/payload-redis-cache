@@ -45,9 +45,7 @@
   },
   "files": [
     "dist",
-    "*.js",
-    "*.d.ts",
-    "!.prettierrc.js"
+    "package.json"
   ],
   "devDependencies": {
     "@types/cookie": "^0.5.1",

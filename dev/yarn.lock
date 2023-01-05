@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aengz/payload-redis-cache@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@aengz/payload-redis-cache/-/payload-redis-cache-0.1.3.tgz#de512a2a41e22ad15d786975473d43bb4d8bb9fa"
+  integrity sha512-VokrskzxqDvBIz8kOOKIGqvEX2oUQWJYPMVptrRhBGqIRKTVoNUrAvmPcVpHA6qwuo5qxKkC2hdoLRKbx3/U2g==
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
