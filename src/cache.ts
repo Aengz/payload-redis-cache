@@ -9,12 +9,14 @@ export const cachePlugin =
   (pluginOptions: PluginOptions) =>
   (config: Config): Config => {
     const includedCollections: string[] = []
+    const includedGlobals: string[] = []
     // Merge incoming plugin options with the default ones
     const {
       redisUrl,
       redisNamespace = 'payload',
       redisIndexesName = 'payload-cache-index',
-      excludedCollections = []
+      excludedCollections = [],
+      excludedGlobals = []
     } = pluginOptions
 
     // Redis connection
@@ -24,8 +26,6 @@ export const cachePlugin =
       indexesName: redisIndexesName
     })
 
-    // apply to all collections
-    // TODO use an array of collections intead of using all of them
     const collections = config.collections?.map((collection) => {
       const { hooks } = collection
 
@@ -44,6 +44,24 @@ export const cachePlugin =
       }
     })
 
+    const globals = config.globals?.map((global) => {
+      const { hooks } = global
+
+      if (!excludedGlobals.includes(global.slug)) {
+        includedGlobals.push(global.slug)
+      }
+
+      const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
+
+      return {
+        ...global,
+        hooks: {
+          ...hooks,
+          afterChange
+        }
+      }
+    })
+
     return {
       ...config,
       admin: {
@@ -51,6 +69,7 @@ export const cachePlugin =
         webpack: extendWebpackConfig({ config })
       },
       collections,
+      globals,
       express: {
         preMiddleware: [
           ...(config?.express?.preMiddleware || []),
