@@ -10,7 +10,7 @@ import {
 import { DEFAULT_USER_COLLECTION } from '../types'
 
 export const cacheMiddleware =
-  (includedCollections: string[], apiBaseUrl: string) =>
+  (includedCollections: string[], includedGlobals: string[], apiBaseUrl: string) =>
   async (req: PayloadRequest, res: Response, next: NextFunction) => {
     // try to match the cache and return immediately
     const {
@@ -18,10 +18,15 @@ export const cacheMiddleware =
       headers: { cookie }
     } = req
 
-    const collectionName = getCollectionName(apiBaseUrl, originalUrl)
+    const entityName = getCollectionName(apiBaseUrl, originalUrl)
 
     // If the collection name cannot be detected or the method is not "GET" then call next()
-    if (!collectionName || !includedCollections.includes(collectionName) || req.method !== 'GET') {
+    if (
+      !entityName ||
+      !includedCollections.includes(entityName) ||
+      !includedGlobals.includes(entityName) ||
+      req.method !== 'GET'
+    ) {
       return next()
     }
 

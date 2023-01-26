@@ -65,7 +65,7 @@ export const cachePlugin =
     return {
       ...config,
       admin: {
-        ...(config.admin || {}),
+        ...(config?.admin || {}),
         webpack: extendWebpackConfig({ config })
       },
       collections,
@@ -73,7 +73,7 @@ export const cachePlugin =
       express: {
         preMiddleware: [
           ...(config?.express?.preMiddleware || []),
-          cacheMiddleware(includedCollections, config.routes?.api || '/api')
+          cacheMiddleware(includedCollections, includedGlobals, config?.routes?.api || '/api')
         ]
       }
     }

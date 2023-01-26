@@ -25,7 +25,7 @@ export const extendWebpackConfig =
       resolve: {
         ...(existingWebpackConfig.resolve || {}),
         alias: {
-          ...(existingWebpackConfig.resolve.alias || {}),
+          ...(existingWebpackConfig.resolve?.alias || {}),
           [adaptersPath]: adaptersMock
         }
       }
