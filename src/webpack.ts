@@ -12,13 +12,14 @@ export const extendWebpackConfig =
   (args: ExtendWebpackConfigArgs) =>
   (webpackConfig: WebpackConfig): WebpackConfig => {
     const { config: originalConfig } = args
+
     const existingWebpackConfig =
       typeof originalConfig.admin?.webpack === 'function'
         ? originalConfig.admin.webpack(webpackConfig)
         : webpackConfig
 
-    const adaptersPath = path.resolve(__dirname, 'cacheAdapters')
-    const adaptersMock = path.resolve(__dirname, 'cacheAdaptersMocks')
+    const adaptersPath = path.resolve(__dirname, 'cache-adapters')
+    const adaptersMock = path.resolve(__dirname, 'cache-adapters-mocks')
 
     const config: WebpackConfig = {
       ...existingWebpackConfig,
@@ -30,6 +31,5 @@ export const extendWebpackConfig =
         }
       }
     }
-
     return config
   }

@@ -1,4 +1,4 @@
-import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../cacheAdapters'
+import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../cache-adapters'
 
 export const generateCacheHash = (userCollection: string, requestedUrl: string): string => {
   const requestUrlAndUserCollection = `${userCollection}-${requestedUrl}`
