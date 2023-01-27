@@ -1,5 +1,5 @@
 import { CollectionAfterChangeHook } from 'payload/types'
-import { invalidateCache } from '../helpers'
+import { invalidateCache } from '../adapters/cacheHelpers'
 
 export const invalidateCacheHook: CollectionAfterChangeHook = ({ doc }) => {
   // invalidate cache

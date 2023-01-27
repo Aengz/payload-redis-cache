@@ -1,12 +1,7 @@
 import { NextFunction, Response } from 'express'
 import { PayloadRequest } from 'payload/types'
-import {
-  extractToken,
-  getCacheItem,
-  getCollectionName,
-  getTokenPayload,
-  setCacheItem
-} from '../helpers'
+import { getCacheItem, getCollectionName, setCacheItem } from '../adapters/cacheHelpers'
+import { extractToken, getTokenPayload } from '../adapters/jwtHelpers'
 import { DEFAULT_USER_COLLECTION } from '../types'
 
 export const cacheMiddleware =

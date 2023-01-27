@@ -1,13 +1,12 @@
-import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../adapters'
 import {
   generateCacheHash,
   getCacheItem,
   getCollectionName,
-  initCache,
   invalidateCache,
   setCacheItem
 } from './cacheHelpers'
-
+import { crypto } from './crypto'
+import { initRedisContext, InitRedisContextParams, redisContext } from './redis'
 jest.mock('../adapters')
 
 const STUB_USER_COLLECTION = 'users'
@@ -223,3 +222,6 @@ describe('cacheHelpers', () => {
     })
   })
 })
+function initCache(params: InitRedisContextParams) {
+  throw new Error('Function not implemented.')
+}

@@ -1,5 +1,5 @@
 import { Config } from 'payload/config'
-import { initCache } from './helpers'
+import { initRedisContext } from './adapters/redis'
 import { invalidateCacheHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
@@ -20,7 +20,7 @@ export const cachePlugin =
     } = pluginOptions
 
     // Redis connection
-    initCache({
+    initRedisContext({
       url: redisUrl,
       namespace: redisNamespace,
       indexesName: redisIndexesName
