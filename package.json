@@ -40,7 +40,8 @@
     "cookie": "0.5.0",
     "jwt-decode": "^3.1.2",
     "payload": "^1.5.9",
-    "redis": "^4.5.1"
+    "redis": "^4.5.1",
+    "events": "^3.3.0"
   },
   "files": [
     "dist"

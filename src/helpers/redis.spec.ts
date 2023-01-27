@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis'
-import { initRedisContext, redisContext } from './redis'
+import { initRedisContext, redisContext } from './redisContext'
 
 jest.mock('redis', () => ({
   createClient: jest.fn()
