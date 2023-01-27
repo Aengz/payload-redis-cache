@@ -17,8 +17,8 @@ export const extendWebpackConfig =
         ? originalConfig.admin.webpack(webpackConfig)
         : webpackConfig
 
-    const adaptersPath = path.resolve(__dirname, 'cacheAdapters')
-    const adaptersMock = path.resolve(__dirname, 'cacheAdaptersMocks')
+    const adaptersPath = path.resolve(__dirname, 'adapters')
+    const adaptersMock = path.resolve(__dirname, 'mocks')
 
     const config: WebpackConfig = {
       ...existingWebpackConfig,
