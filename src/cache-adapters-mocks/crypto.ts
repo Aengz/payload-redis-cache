@@ -1,0 +1,2 @@
+// crypto
+export const crypto = () => {}
