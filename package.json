@@ -25,7 +25,7 @@
     "cache",
     "redis"
   ],
-  "version": "0.1.9-4",
+  "version": "0.1.9-5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
