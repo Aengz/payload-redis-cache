@@ -1,8 +1,8 @@
 import { CollectionAfterChangeHook } from 'payload/types'
-import { invalidateCache } from '../helpers'
+import { publishInvalidateCache } from '../events'
 
 export const invalidateCacheHook: CollectionAfterChangeHook = ({ doc }) => {
   // invalidate cache
-  invalidateCache()
+  publishInvalidateCache({})
   return doc
 }

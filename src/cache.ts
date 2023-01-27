@@ -3,7 +3,6 @@ import { initCache } from './helpers'
 import { invalidateCacheHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
 import { PluginOptions } from './types'
-import { extendWebpackConfig } from './webpack'
 
 export const cachePlugin =
   (pluginOptions: PluginOptions) =>
@@ -64,10 +63,6 @@ export const cachePlugin =
 
     return {
       ...config,
-      admin: {
-        ...(config?.admin || {}),
-        webpack: extendWebpackConfig({ config })
-      },
       collections,
       globals,
       express: {
