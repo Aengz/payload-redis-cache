@@ -16,12 +16,10 @@ export const cacheMiddleware =
     const entityName = getCollectionName(apiBaseUrl, originalUrl)
 
     // If the collection name cannot be detected or the method is not "GET" then call next()
-    if (
-      !entityName ||
-      !includedCollections.includes(entityName) ||
-      !includedGlobals.includes(entityName) ||
-      req.method !== 'GET'
-    ) {
+    const useCache =
+      includedCollections.includes(entityName) || !includedGlobals.includes(entityName)
+
+    if (!entityName || !useCache || req.method !== 'GET') {
       return next()
     }
 
