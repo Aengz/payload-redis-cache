@@ -2,8 +2,17 @@ import { Config } from 'payload/config'
 import { initRedisContext } from './adapters/redis'
 import { invalidateCacheHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
-import { PluginOptions } from './types'
+import { PluginOptions, RedisInitOptions } from './types'
 import { extendWebpackConfig } from './webpack'
+
+export const initRedis = (params: RedisInitOptions) => {
+  const {
+    redisUrl: url,
+    redisNamespace: namespace = 'payload',
+    redisIndexesName: indexesName = 'payload-cache-index'
+  } = params
+  initRedisContext({ url, namespace, indexesName })
+}
 
 export const cachePlugin =
   (pluginOptions: PluginOptions) =>
@@ -11,20 +20,7 @@ export const cachePlugin =
     const includedCollections: string[] = []
     const includedGlobals: string[] = []
     // Merge incoming plugin options with the default ones
-    const {
-      redisUrl,
-      redisNamespace = 'payload',
-      redisIndexesName = 'payload-cache-index',
-      excludedCollections = [],
-      excludedGlobals = []
-    } = pluginOptions
-
-    // Redis connection
-    initRedisContext({
-      url: redisUrl,
-      namespace: redisNamespace,
-      indexesName: redisIndexesName
-    })
+    const { excludedCollections = [], excludedGlobals = [] } = pluginOptions
 
     const collections = config?.collections
       ? config.collections?.map((collection) => {

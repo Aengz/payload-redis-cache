@@ -7,7 +7,8 @@ import {
 } from './cacheHelpers'
 import { crypto } from './crypto'
 import { initRedisContext, InitRedisContextParams, redisContext } from './redis'
-jest.mock('../adapters')
+jest.mock('./redis')
+jest.mock('./crypto')
 
 const STUB_USER_COLLECTION = 'users'
 const STUB_REQUESTED_URL = '/api/example'
@@ -197,7 +198,7 @@ describe('cacheHelpers', () => {
       // Mock the initRedisContext function to verify that it is called with the correct parameters
       const getRedisClientMock = (<jest.Mock>initRedisContext).mockImplementation(() => {})
 
-      initCache(params)
+      initRedisContext(params)
 
       // Assert that the initRedisContext function was called with the correct parameters
       expect(getRedisClientMock).toHaveBeenCalledWith(params)
@@ -222,6 +223,3 @@ describe('cacheHelpers', () => {
     })
   })
 })
-function initCache(params: InitRedisContextParams) {
-  throw new Error('Function not implemented.')
-}
