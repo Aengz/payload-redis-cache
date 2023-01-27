@@ -1,14 +1,14 @@
-import { crypto, initRedisContext, InitRedisContextParams, redisContext } from '../adapters'
 import {
   generateCacheHash,
   getCacheItem,
   getCollectionName,
-  initCache,
   invalidateCache,
   setCacheItem
 } from './cacheHelpers'
-
-jest.mock('../adapters')
+import { crypto } from './crypto'
+import { initRedisContext, InitRedisContextParams, redisContext } from './redis'
+jest.mock('./redis')
+jest.mock('./crypto')
 
 const STUB_USER_COLLECTION = 'users'
 const STUB_REQUESTED_URL = '/api/example'
@@ -198,7 +198,7 @@ describe('cacheHelpers', () => {
       // Mock the initRedisContext function to verify that it is called with the correct parameters
       const getRedisClientMock = (<jest.Mock>initRedisContext).mockImplementation(() => {})
 
-      initCache(params)
+      initRedisContext(params)
 
       // Assert that the initRedisContext function was called with the correct parameters
       expect(getRedisClientMock).toHaveBeenCalledWith(params)

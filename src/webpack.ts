@@ -11,15 +11,21 @@ interface ExtendWebpackConfigArgs {
 export const extendWebpackConfig =
   (args: ExtendWebpackConfigArgs) =>
   (webpackConfig: WebpackConfig): WebpackConfig => {
+    const { config: originalConfig } = args
+    const existingWebpackConfig =
+      typeof originalConfig.admin?.webpack === 'function'
+        ? originalConfig.admin.webpack(webpackConfig)
+        : webpackConfig
+
     const adaptersPath = path.resolve(__dirname, 'adapters')
     const adaptersMock = path.resolve(__dirname, 'mocks')
 
     const config: WebpackConfig = {
-      ...webpackConfig,
+      ...existingWebpackConfig,
       resolve: {
-        ...(webpackConfig.resolve || {}),
+        ...(existingWebpackConfig.resolve || {}),
         alias: {
-          ...(webpackConfig.resolve.alias || {}),
+          ...(existingWebpackConfig.resolve?.alias || {}),
           [adaptersPath]: adaptersMock
         }
       }

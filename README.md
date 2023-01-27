@@ -39,12 +39,26 @@ import { buildConfig } from 'payload/config';
 import { cachePlugin } from '@aengz/payload-redis-cache'
 
 const config = buildConfig({
+  // your config here
+  
   plugins: [
     cachePlugin({ 
-      redisUrl: 'redis://localhost:6379' ,
-      excludedCollections: ['users']
+      excludedCollections: ['users'],
+      //  excludedGlobals: ['myglobal']
     })
   ]
+})
+```
+
+Add the initializer function in `server.ts`
+
+```js
+import { cachePlugin } from '@aengz/payload-redis-cache'
+
+...
+
+initRedis({
+  redisUrl: process.env.REDIS_URI
 })
 ```
 
