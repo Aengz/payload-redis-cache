@@ -31,7 +31,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cd ./dev && yarn dev",
-    "build": "tsc",
+    "build": "rm -Rf ./dist && tsc",
     "dev:build": "yarn build && yarn link && cd dev && yarn link --force @aengz/payload-redis-cache",
     "build:publish": "yarn build && yarn publish",
     "test": "jest"
