@@ -22,10 +22,10 @@ export const getCacheItem = async (
   const hash = generateCacheHash(userCollection, requestedUrl)
   const jsonData = await redisClient.GET(hash)
   if (!jsonData) {
-    logger.info('<< Get Cache [MISS]', requestedUrl, userCollection)
+    logger.info(`<< Get Cache [MISS] - URL:[${requestedUrl}] User:[${userCollection}]`)
     return null
   }
-  logger.info('<< Get Cache [OK]', requestedUrl, userCollection)
+  logger.info(`<< Get Cache [OK] - URL:[${requestedUrl}] User:[${userCollection}]`)
   return jsonData
 }
 
@@ -41,7 +41,7 @@ export const setCacheItem = <T>(
   }
 
   const hash = generateCacheHash(userCollection, requestedUrl)
-  logger.info('>> Set Cache Item', requestedUrl, userCollection)
+  logger.info(`>> Set Cache Item - URL:[${requestedUrl}] User:[${userCollection}]`)
 
   try {
     const data = JSON.stringify(paginatedDocs)
