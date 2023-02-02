@@ -70,6 +70,8 @@ initRedis({
 | `redisNamespace` | `string` | Choose the prefix to use for cache redis keys. Defaults to `payload`. |
 | `redisIndexesName` | `string` | Choose the index key for cache redis indexes. Defaults to `payload-cache-index`. |
 | `excludedCollections` | `string[]` | An array of collection names to be excluded. |
+| `excludedGlobals` | `string[]` | An array of globals names to be excluded. |
+| `includedPaths` | `string[]` | An array of custom routes to be included. |
 
 A * denotes that the property is required.
 
