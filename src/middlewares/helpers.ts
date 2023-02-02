@@ -23,8 +23,6 @@ export const canUseCache = ({
   const globalsEntityName = getEntityName(apiBaseUrl, originalUrl, 'globals')
   const pathEntityName = originalUrl.replace(apiBaseUrl, '')
 
-  console.log(collectionsEntityName, globalsEntityName, pathEntityName)
-
   return (
     !originalUrl.includes('_preferences') &&
     (includedCollections.includes(collectionsEntityName) ||
