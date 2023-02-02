@@ -1,4 +1,5 @@
 import { crypto } from './crypto'
+import { logger } from './logger'
 import { redisContext } from './redis'
 
 export const generateCacheHash = (userCollection: string, requestedUrl: string): string => {
@@ -14,17 +15,17 @@ export const getCacheItem = async (
 ): Promise<string | null> => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
-    console.log(`Unable to get cache for ${requestedUrl}`)
+    logger.info(`Unable to get cache for ${requestedUrl}`)
     return null
   }
 
   const hash = generateCacheHash(userCollection, requestedUrl)
   const jsonData = await redisClient.GET(hash)
   if (!jsonData) {
-    console.log('<< Get Cache [MISS]', requestedUrl, userCollection)
+    logger.info('<< Get Cache [MISS]', requestedUrl, userCollection)
     return null
   }
-  console.log('<< Get Cache [OK]', requestedUrl, userCollection)
+  logger.info('<< Get Cache [OK]', requestedUrl, userCollection)
   return jsonData
 }
 
@@ -35,12 +36,12 @@ export const setCacheItem = <T>(
 ): void => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
-    console.log(`Unable to set cache for ${requestedUrl}`)
+    logger.info(`Unable to set cache for ${requestedUrl}`)
     return
   }
 
   const hash = generateCacheHash(userCollection, requestedUrl)
-  console.log('>> Set Cache Item', requestedUrl, userCollection)
+  logger.info('>> Set Cache Item', requestedUrl, userCollection)
 
   try {
     const data = JSON.stringify(paginatedDocs)
@@ -49,14 +50,14 @@ export const setCacheItem = <T>(
     const indexesName = redisContext.getIndexesName()
     redisClient.SADD(indexesName, hash)
   } catch (e) {
-    console.log(`Unable to set cache for ${requestedUrl}`)
+    logger.info(`Unable to set cache for ${requestedUrl}`)
   }
 }
 
 export const invalidateCache = async (): Promise<void> => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
-    console.log('Unable to invalidate cache')
+    logger.info('Unable to invalidate cache')
     return
   }
 
@@ -67,11 +68,11 @@ export const invalidateCache = async (): Promise<void> => {
     redisClient.SREM(indexesName, index)
   })
 
-  console.log('Cache Invalidated')
+  logger.info('Cache Invalidated')
 }
 
-export const getCollectionName = (apiBaseUrl: string, url: string) => {
-  const regex = new RegExp(`^${apiBaseUrl}\/(.*)[/?].*`, 'i')
+export const getEntityName = (apiBaseUrl: string, url: string, namespace: string) => {
+  const regex = new RegExp(`^${apiBaseUrl}\/${namespace}\/(.*)[/?].*`, 'i')
   const match = url.match(regex)
-  return match ? match[1] : null
+  return match ? match[1] : 'no-match'
 }

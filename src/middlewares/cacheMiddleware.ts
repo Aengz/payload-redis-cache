@@ -1,12 +1,12 @@
 import { NextFunction, Response } from 'express'
 import { PayloadRequest } from 'payload/types'
-import { getCacheItem, getCollectionName, setCacheItem } from '../adapters/cacheHelpers'
+import { getCacheItem, setCacheItem } from '../adapters/cacheHelpers'
 import { extractToken, getTokenPayload } from '../adapters/jwtHelpers'
-import { DEFAULT_USER_COLLECTION } from '../types'
+import { cacheMiddlewareArgs, DEFAULT_USER_COLLECTION } from '../types'
 import { canUseCache } from './helpers'
 
 export const cacheMiddleware =
-  (includedCollections: string[], includedGlobals: string[], apiBaseUrl: string) =>
+  ({ includedCollections, includedGlobals, includedPaths, apiBaseUrl }: cacheMiddlewareArgs) =>
   async (req: PayloadRequest, res: Response, next: NextFunction) => {
     // try to match the cache and return immediately
     const {
@@ -14,12 +14,16 @@ export const cacheMiddleware =
       headers: { cookie }
     } = req
 
-    const entityName = getCollectionName(apiBaseUrl, originalUrl)
-
     // If the collection name cannot be detected or the method is not "GET" then call next()
-    const useCache = canUseCache(entityName, includedCollections, includedGlobals)
+    const useCache = canUseCache({
+      apiBaseUrl,
+      originalUrl,
+      includedCollections,
+      includedGlobals,
+      includedPaths
+    })
 
-    if (!entityName || !useCache || req.method !== 'GET') {
+    if (!useCache || req.method !== 'GET') {
       return next()
     }
 

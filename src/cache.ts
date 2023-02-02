@@ -20,7 +20,7 @@ export const cachePlugin =
     const includedCollections: string[] = []
     const includedGlobals: string[] = []
     // Merge incoming plugin options with the default ones
-    const { excludedCollections = [], excludedGlobals = [] } = pluginOptions
+    const { excludedCollections = [], excludedGlobals = [], includedPaths = [] } = pluginOptions
 
     const collections = config?.collections
       ? config.collections?.map((collection) => {
@@ -73,7 +73,12 @@ export const cachePlugin =
       express: {
         preMiddleware: [
           ...(config?.express?.preMiddleware || []),
-          cacheMiddleware(includedCollections, includedGlobals, config?.routes?.api || '/api')
+          cacheMiddleware({
+            includedCollections,
+            includedGlobals,
+            includedPaths,
+            apiBaseUrl: config?.routes?.api || '/api'
+          })
         ]
       }
     }

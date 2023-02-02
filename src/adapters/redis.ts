@@ -1,4 +1,5 @@
 import { createClient, RedisClientType } from 'redis'
+import { logger } from './logger'
 
 export interface IRedisContext {
   getRedisClient: () => RedisClientType
@@ -23,10 +24,10 @@ class RedisContext implements IRedisContext {
     try {
       this.redisClient = createClient({ url })
       this.redisClient.connect()
-      console.log('Connected to Redis successfully!')
+      logger.info('Connected to Redis successfully!')
     } catch (e) {
       this.redisClient = null
-      console.log('Unable to connect to Redis!')
+      logger.info('Unable to connect to Redis!')
     }
   }
 
