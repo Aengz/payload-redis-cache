@@ -198,22 +198,4 @@ describe('cacheHelpers', () => {
       expect(getRedisClientMock).toHaveBeenCalledWith(params)
     })
   })
-
-  // describe('getCollectionName', () => {
-  //   it('returns the correct collection name', () => {
-  //     const apiBaseUrl = '/api'
-
-  //     expect(getCollectionName(apiBaseUrl, '/api/users/')).toBe('users')
-  //     expect(getCollectionName(apiBaseUrl, '/api/posts/')).toBe('posts')
-  //     expect(getCollectionName(apiBaseUrl, '/api/comments/')).toBe('comments')
-  //     expect(getCollectionName(apiBaseUrl, '/api/comments/test')).toBe('comments')
-  //     expect(getCollectionName(apiBaseUrl, '/api/comments?where=1')).toBe('comments')
-  //   })
-
-  //   it('returns null for invalid input', () => {
-  //     const apiBaseUrl = '/api'
-
-  //     expect(getCollectionName(apiBaseUrl, '/other/comments/')).toBe(null)
-  //   })
-  // })
 })
