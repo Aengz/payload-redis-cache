@@ -70,9 +70,3 @@ export const invalidateCache = async (): Promise<void> => {
 
   logger.info('Cache Invalidated')
 }
-
-export const getEntityName = (apiBaseUrl: string, url: string, namespace: string) => {
-  const regex = new RegExp(`^${apiBaseUrl}\/${namespace}\/(.*)[/?].*`, 'i')
-  const match = url.match(regex)
-  return match ? match[1] : 'no-match'
-}

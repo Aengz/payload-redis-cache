@@ -3,7 +3,7 @@ import { canUseCache } from './helpers'
 describe('canUseCache', () => {
   it('returns true for included collections', () => {
     const apiBaseUrl = '/api'
-    const originalUrl = '/api/collections/collection1'
+    const originalUrl = '/api/collection1'
     const includedCollections = ['collection1', 'collection2']
     const includedGlobals = ['global1', 'global2']
     const includedPaths = []
