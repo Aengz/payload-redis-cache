@@ -1,10 +1,4 @@
-import {
-  generateCacheHash,
-  getCacheItem,
-  getCollectionName,
-  invalidateCache,
-  setCacheItem
-} from './cacheHelpers'
+import { generateCacheHash, getCacheItem, invalidateCache, setCacheItem } from './cacheHelpers'
 import { crypto } from './crypto'
 import { initRedisContext, InitRedisContextParams, redisContext } from './redis'
 jest.mock('./redis')
@@ -202,24 +196,6 @@ describe('cacheHelpers', () => {
 
       // Assert that the initRedisContext function was called with the correct parameters
       expect(getRedisClientMock).toHaveBeenCalledWith(params)
-    })
-  })
-
-  describe('getCollectionName', () => {
-    it('returns the correct collection name', () => {
-      const apiBaseUrl = '/api'
-
-      expect(getCollectionName(apiBaseUrl, '/api/users/')).toBe('users')
-      expect(getCollectionName(apiBaseUrl, '/api/posts/')).toBe('posts')
-      expect(getCollectionName(apiBaseUrl, '/api/comments/')).toBe('comments')
-      expect(getCollectionName(apiBaseUrl, '/api/comments/test')).toBe('comments')
-      expect(getCollectionName(apiBaseUrl, '/api/comments?where=1')).toBe('comments')
-    })
-
-    it('returns null for invalid input', () => {
-      const apiBaseUrl = '/api'
-
-      expect(getCollectionName(apiBaseUrl, '/other/comments/')).toBe(null)
     })
   })
 })

@@ -7,6 +7,7 @@ export interface RedisInitOptions {
 export interface PluginOptions {
   excludedCollections?: string[]
   excludedGlobals?: string[]
+  includedPaths?: string[]
 }
 
 export interface JwtToken {
@@ -16,3 +17,10 @@ export interface JwtToken {
 }
 
 export const DEFAULT_USER_COLLECTION = 'loggedout'
+
+export interface cacheMiddlewareArgs {
+  includedCollections: string[]
+  includedGlobals: string[]
+  includedPaths: string[]
+  apiBaseUrl: string
+}
