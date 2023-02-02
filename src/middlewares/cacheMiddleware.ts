@@ -3,6 +3,7 @@ import { PayloadRequest } from 'payload/types'
 import { getCacheItem, getCollectionName, setCacheItem } from '../adapters/cacheHelpers'
 import { extractToken, getTokenPayload } from '../adapters/jwtHelpers'
 import { DEFAULT_USER_COLLECTION } from '../types'
+import { canUseCache } from './helpers'
 
 export const cacheMiddleware =
   (includedCollections: string[], includedGlobals: string[], apiBaseUrl: string) =>
@@ -16,8 +17,7 @@ export const cacheMiddleware =
     const entityName = getCollectionName(apiBaseUrl, originalUrl)
 
     // If the collection name cannot be detected or the method is not "GET" then call next()
-    const useCache =
-      includedCollections.includes(entityName) || !includedGlobals.includes(entityName)
+    const useCache = canUseCache(entityName, includedCollections, includedGlobals)
 
     if (!entityName || !useCache || req.method !== 'GET') {
       return next()
