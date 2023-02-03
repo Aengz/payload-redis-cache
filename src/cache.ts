@@ -31,12 +31,14 @@ export const cachePlugin =
           }
 
           const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
+          const afterDelete = [...(hooks?.afterDelete || []), invalidateCacheHook]
 
           return {
             ...collection,
             hooks: {
               ...hooks,
-              afterChange
+              afterChange,
+              afterDelete
             }
           }
         })
@@ -56,7 +58,8 @@ export const cachePlugin =
             ...global,
             hooks: {
               ...hooks,
-              afterChange
+              afterChange,
+              afterDelete
             }
           }
         })
