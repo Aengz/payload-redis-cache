@@ -1,4 +1,4 @@
-import { Config } from 'payload/config'
+import type { Config } from 'payload/config'
 import { initRedisContext } from './adapters/redis'
 import { invalidateCacheAfterChangeHook, invalidateCacheAfterDeleteHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
