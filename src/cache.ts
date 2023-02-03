@@ -1,6 +1,6 @@
 import { Config } from 'payload/config'
 import { initRedisContext } from './adapters/redis'
-import { invalidateCacheHook } from './hooks'
+import { invalidateCacheAfterChangeHook, invalidateCacheAfterDeleteHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
 import { PluginOptions, RedisInitOptions } from './types'
 import { extendWebpackConfig } from './webpack'
@@ -30,8 +30,8 @@ export const cachePlugin =
             includedCollections.push(collection.slug)
           }
 
-          const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
-          const afterDelete = [...(hooks?.afterDelete || []), invalidateCacheHook]
+          const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
+          const afterDelete = [...(hooks?.afterDelete || []), invalidateCacheAfterDeleteHook]
 
           return {
             ...collection,
@@ -52,14 +52,13 @@ export const cachePlugin =
             includedGlobals.push(global.slug)
           }
 
-          const afterChange = [...(hooks?.afterChange || []), invalidateCacheHook]
+          const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
 
           return {
             ...global,
             hooks: {
               ...hooks,
-              afterChange,
-              afterDelete
+              afterChange
             }
           }
         })
