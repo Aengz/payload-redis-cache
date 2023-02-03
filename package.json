@@ -58,7 +58,7 @@
     "jest": "^29.3.1",
     "jwt-decode": "^3.1.2",
     "nodemon": "^2.0.6",
-    "payload": "1.5.9",
+    "payload": "^1.6.3",
     "pino": "^8.8.0",
     "pino-pretty": "^9.1.1",
     "redis": "^4.5.1",
