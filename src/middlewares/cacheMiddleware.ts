@@ -44,7 +44,7 @@ export const cacheMiddleware =
       setCacheItem({
         userCollection,
         requestedUrl: originalUrl,
-        paginatedDocs: body,
+        body,
         authorization
       })
       return res.json(body)

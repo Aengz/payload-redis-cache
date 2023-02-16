@@ -134,7 +134,7 @@ describe('cacheHelpers', () => {
         userCollection: STUB_USER_COLLECTION,
         requestedUrl: STUB_REQUESTED_URL,
         authorization: '',
-        paginatedDocs: STUB_JSON_CACHE_ITEM
+        body: STUB_JSON_CACHE_ITEM
       })
       expect(spyedGenerateCacheHash).not.toBeCalled()
     })
@@ -152,7 +152,7 @@ describe('cacheHelpers', () => {
         userCollection: STUB_USER_COLLECTION,
         requestedUrl: STUB_REQUESTED_URL,
         authorization: '',
-        paginatedDocs: STUB_JSON_CACHE_ITEM
+        body: STUB_JSON_CACHE_ITEM
       })
 
       expect(redisClientMock.SET).toHaveBeenCalledWith(STUB_CACHE_HASH, STUB_CACHE_ITEM)
@@ -174,7 +174,7 @@ describe('cacheHelpers', () => {
         userCollection: STUB_USER_COLLECTION,
         requestedUrl: STUB_REQUESTED_URL,
         authorization: '',
-        paginatedDocs: STUB_JSON_CACHE_ITEM
+        body: STUB_JSON_CACHE_ITEM
       })
 
       expect(redisClientMock.SET).toHaveBeenCalledWith(STUB_CACHE_HASH, STUB_CACHE_ITEM)

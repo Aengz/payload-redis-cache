@@ -8,8 +8,8 @@ interface cacheBaseArgs {
   authorization: string
 }
 
-interface cacheExtendedArgs<T> extends cacheBaseArgs {
-  paginatedDocs: T
+interface cacheExtendedArgs extends cacheBaseArgs {
+  body: unknown
 }
 
 export const generateCacheHash = ({
@@ -50,12 +50,12 @@ export const getCacheItem = async ({
   return jsonData
 }
 
-export const setCacheItem = <T>({
+export const setCacheItem = ({
   userCollection,
   requestedUrl,
   authorization,
-  paginatedDocs
-}: cacheExtendedArgs<T>): void => {
+  body
+}: cacheExtendedArgs): void => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
     logger.info(`Unable to set cache for ${requestedUrl}`)
@@ -66,7 +66,7 @@ export const setCacheItem = <T>({
   logger.info(`>> Set Cache Item - URL:[${requestedUrl}] User:[${userCollection}]`)
 
   try {
-    const data = JSON.stringify(paginatedDocs)
+    const data = JSON.stringify(body)
     redisClient.SET(hash, data)
 
     const indexesName = redisContext.getIndexesName()
