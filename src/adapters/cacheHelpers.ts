@@ -23,12 +23,6 @@ export const generateCacheHash = ({
   return `${namespace}:${pathHash}`
 }
 
-interface generateCacheHashProps {
-  userCollection: string
-  requestedUrl: string
-  authorization: string
-}
-
 export const getCacheItem = async ({
   userCollection,
   requestedUrl,
