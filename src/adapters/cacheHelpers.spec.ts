@@ -23,19 +23,31 @@ describe('cacheHelpers', () => {
     })
 
     it('sha256 should be used', () => {
-      generateCacheHash(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      generateCacheHash({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(crypto.createHash).toHaveBeenCalledWith('sha256')
     })
 
-    it('kebab case union should be passed to the update', () => {
-      const expectedValue = 'users-/api/example'
-      generateCacheHash(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+    it('should pass a string to the update', () => {
+      const expectedValue = 'users-/api/example-Bearer 1234'
+      generateCacheHash({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: 'Bearer 1234'
+      })
       expect(hashMock.update).toHaveBeenCalledWith(expectedValue)
     })
 
     it('should generate a cache hash for the given user collection and requested URL', () => {
       ;(<jest.Mock>redisContext.getNamespace).mockReturnValue('namespace')
-      const result = generateCacheHash(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      const result = generateCacheHash({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(result).toEqual(STUB_CACHE_HASH)
     })
   })
@@ -53,7 +65,11 @@ describe('cacheHelpers', () => {
       // Mock the redisContext module to return a null redis client
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(null)
 
-      const result = await getCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      const result = await getCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(result).toBeNull()
       expect(spyedGenerateCacheHash).not.toBeCalled()
     })
@@ -65,9 +81,17 @@ describe('cacheHelpers', () => {
       }
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(redisClientMock)
 
-      const result = await getCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      const result = await getCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(result).toBeNull()
-      expect(spyedGenerateCacheHash).toBeCalledWith(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      expect(spyedGenerateCacheHash).toBeCalledWith({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(redisClientMock.GET).toBeCalledWith(STUB_CACHE_HASH)
     })
 
@@ -78,9 +102,17 @@ describe('cacheHelpers', () => {
       }
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(redisClientMock)
 
-      const result = await getCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      const result = await getCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(result).toEqual(STUB_CACHE_ITEM)
-      expect(spyedGenerateCacheHash).toBeCalledWith(STUB_USER_COLLECTION, STUB_REQUESTED_URL)
+      expect(spyedGenerateCacheHash).toBeCalledWith({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: ''
+      })
       expect(redisClientMock.GET).toBeCalledWith(STUB_CACHE_HASH)
     })
   })
@@ -98,7 +130,12 @@ describe('cacheHelpers', () => {
       // Mock the redisContext module to return a null redis client
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(null)
 
-      setCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL, STUB_JSON_CACHE_ITEM)
+      setCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: '',
+        paginatedDocs: STUB_JSON_CACHE_ITEM
+      })
       expect(spyedGenerateCacheHash).not.toBeCalled()
     })
 
@@ -111,7 +148,12 @@ describe('cacheHelpers', () => {
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(redisClientMock)
       ;(<jest.Mock>redisContext.getIndexesName).mockReturnValue('indexes')
 
-      setCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL, STUB_JSON_CACHE_ITEM)
+      setCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: '',
+        paginatedDocs: STUB_JSON_CACHE_ITEM
+      })
 
       expect(redisClientMock.SET).toHaveBeenCalledWith(STUB_CACHE_HASH, STUB_CACHE_ITEM)
       expect(redisClientMock.SADD).toHaveBeenCalledWith('indexes', STUB_CACHE_HASH)
@@ -128,7 +170,12 @@ describe('cacheHelpers', () => {
       ;(<jest.Mock>redisContext.getRedisClient).mockReturnValue(redisClientMock)
       ;(<jest.Mock>redisContext.getIndexesName).mockReturnValue('indexes')
 
-      setCacheItem(STUB_USER_COLLECTION, STUB_REQUESTED_URL, STUB_JSON_CACHE_ITEM)
+      setCacheItem({
+        userCollection: STUB_USER_COLLECTION,
+        requestedUrl: STUB_REQUESTED_URL,
+        authorization: '',
+        paginatedDocs: STUB_JSON_CACHE_ITEM
+      })
 
       expect(redisClientMock.SET).toHaveBeenCalledWith(STUB_CACHE_HASH, STUB_CACHE_ITEM)
       expect(redisClientMock.SADD).not.toHaveBeenCalled()

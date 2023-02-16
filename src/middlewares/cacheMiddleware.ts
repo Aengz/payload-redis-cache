@@ -11,7 +11,7 @@ export const cacheMiddleware =
     // try to match the cache and return immediately
     const {
       originalUrl,
-      headers: { cookie }
+      headers: { cookie, authorization = '' }
     } = req
 
     // If the collection name cannot be detected or the method is not "GET" then call next()
@@ -41,12 +41,21 @@ export const cacheMiddleware =
     const json = res.json
     res.json = (body) => {
       res.json = json
-      setCacheItem(userCollection, originalUrl, body)
+      setCacheItem({
+        userCollection,
+        requestedUrl: originalUrl,
+        paginatedDocs: body,
+        authorization
+      })
       return res.json(body)
     }
 
     // Try to get the cached item
-    const cacheData = await getCacheItem(userCollection, originalUrl)
+    const cacheData = await getCacheItem({
+      userCollection,
+      requestedUrl: originalUrl,
+      authorization
+    })
     if (cacheData) {
       return res.setHeader('Content-Type', 'application/json').send(cacheData)
     }

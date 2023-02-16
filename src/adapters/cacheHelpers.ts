@@ -2,24 +2,45 @@ import { crypto } from './crypto'
 import { logger } from './logger'
 import { redisContext } from './redis'
 
-export const generateCacheHash = (userCollection: string, requestedUrl: string): string => {
-  const requestUrlAndUserCollection = `${userCollection}-${requestedUrl}`
+interface cacheBaseArgs {
+  userCollection: string
+  requestedUrl: string
+  authorization: string
+}
+
+interface cacheExtendedArgs<T> extends cacheBaseArgs {
+  paginatedDocs: T
+}
+
+export const generateCacheHash = ({
+  userCollection,
+  requestedUrl,
+  authorization
+}: cacheBaseArgs): string => {
+  const requestUrlAndUserCollection = `${userCollection}-${requestedUrl}-${authorization}`
   const pathHash = crypto.createHash('sha256').update(requestUrlAndUserCollection).digest('hex')
   const namespace = redisContext.getNamespace()
   return `${namespace}:${pathHash}`
 }
 
-export const getCacheItem = async (
-  userCollection: string,
+interface generateCacheHashProps {
+  userCollection: string
   requestedUrl: string
-): Promise<string | null> => {
+  authorization: string
+}
+
+export const getCacheItem = async ({
+  userCollection,
+  requestedUrl,
+  authorization
+}: cacheBaseArgs): Promise<string | null> => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
     logger.info(`Unable to get cache for ${requestedUrl}`)
     return null
   }
 
-  const hash = generateCacheHash(userCollection, requestedUrl)
+  const hash = generateCacheHash({ userCollection, requestedUrl, authorization })
   const jsonData = await redisClient.GET(hash)
   if (!jsonData) {
     logger.info(`<< Get Cache [MISS] - URL:[${requestedUrl}] User:[${userCollection}]`)
@@ -29,18 +50,19 @@ export const getCacheItem = async (
   return jsonData
 }
 
-export const setCacheItem = <T>(
-  userCollection: string,
-  requestedUrl: string,
-  paginatedDocs: T
-): void => {
+export const setCacheItem = <T>({
+  userCollection,
+  requestedUrl,
+  authorization,
+  paginatedDocs
+}: cacheExtendedArgs<T>): void => {
   const redisClient = redisContext.getRedisClient()
   if (!redisClient) {
     logger.info(`Unable to set cache for ${requestedUrl}`)
     return
   }
 
-  const hash = generateCacheHash(userCollection, requestedUrl)
+  const hash = generateCacheHash({ userCollection, requestedUrl, authorization })
   logger.info(`>> Set Cache Item - URL:[${requestedUrl}] User:[${userCollection}]`)
 
   try {
