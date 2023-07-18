@@ -25,6 +25,10 @@ class RedisContext implements IRedisContext {
       this.redisClient = createClient({ url })
       this.redisClient.connect()
       logger.info('Connected to Redis successfully!')
+
+      this.redisClient.on('error', (error) => {
+        logger.error(error)
+      })
     } catch (e) {
       this.redisClient = null
       logger.info('Unable to connect to Redis!')
