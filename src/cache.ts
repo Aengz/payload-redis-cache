@@ -1,4 +1,5 @@
-import type { Config } from 'payload/config'
+import type { Config, Plugin } from 'payload/config'
+import { CollectionConfig, GlobalConfig } from 'payload/types'
 import { initRedisContext } from './adapters/redis'
 import { invalidateCacheAfterChangeHook, invalidateCacheAfterDeleteHook } from './hooks'
 import { cacheMiddleware } from './middlewares'
@@ -14,72 +15,74 @@ export const initRedis = (params: RedisInitOptions) => {
   initRedisContext({ url, namespace, indexesName })
 }
 
-export const cachePlugin = (pluginOptions: PluginOptions) => (config: Config) => {
-  const includedCollections: string[] = []
-  const includedGlobals: string[] = []
-  // Merge incoming plugin options with the default ones
-  const { excludedCollections = [], excludedGlobals = [], includedPaths = [] } = pluginOptions
+export const cachePlugin =
+  (pluginOptions: PluginOptions): Plugin =>
+  (config: Config): Config | Promise<Config> => {
+    const includedCollections: string[] = []
+    const includedGlobals: string[] = []
+    // Merge incoming plugin options with the default ones
+    const { excludedCollections = [], excludedGlobals = [], includedPaths = [] } = pluginOptions
 
-  const collections = config?.collections
-    ? config.collections?.map((collection) => {
-        const { hooks } = collection
+    const collections = config?.collections
+      ? config.collections?.map((collection): CollectionConfig => {
+          const { hooks } = collection
 
-        if (!excludedCollections.includes(collection.slug)) {
-          includedCollections.push(collection.slug)
-        }
-
-        const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
-        const afterDelete = [...(hooks?.afterDelete || []), invalidateCacheAfterDeleteHook]
-
-        return {
-          ...collection,
-          hooks: {
-            ...hooks,
-            afterChange,
-            afterDelete
+          if (!excludedCollections.includes(collection.slug)) {
+            includedCollections.push(collection.slug)
           }
-        }
-      })
-    : []
 
-  const globals = config?.globals
-    ? config.globals?.map((global) => {
-        const { hooks } = global
+          const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
+          const afterDelete = [...(hooks?.afterDelete || []), invalidateCacheAfterDeleteHook]
 
-        if (!excludedGlobals.includes(global.slug)) {
-          includedGlobals.push(global.slug)
-        }
-
-        const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
-
-        return {
-          ...global,
-          hooks: {
-            ...hooks,
-            afterChange
+          return {
+            ...collection,
+            hooks: {
+              ...hooks,
+              afterChange,
+              afterDelete
+            }
           }
-        }
-      })
-    : []
-
-  return {
-    ...config,
-    admin: {
-      ...(config?.admin || {}),
-      webpack: extendWebpackConfig({ config })
-    },
-    collections,
-    globals,
-    express: {
-      preMiddleware: [
-        ...(config?.express?.preMiddleware || []),
-        cacheMiddleware({
-          includedCollections,
-          includedGlobals,
-          includedPaths,
-          apiBaseUrl: config?.routes?.api || '/api'
         })
-      ]
+      : []
+
+    const globals = config?.globals
+      ? config.globals?.map((global): GlobalConfig => {
+          const { hooks } = global
+
+          if (!excludedGlobals.includes(global.slug)) {
+            includedGlobals.push(global.slug)
+          }
+
+          const afterChange = [...(hooks?.afterChange || []), invalidateCacheAfterChangeHook]
+
+          return {
+            ...global,
+            hooks: {
+              ...hooks,
+              afterChange
+            }
+          }
+        })
+      : []
+
+    return {
+      ...config,
+      admin: {
+        ...(config?.admin || {}),
+        webpack: extendWebpackConfig({ config })
+      },
+      collections,
+      globals,
+      express: {
+        preMiddleware: [
+          ...(config?.express?.preMiddleware || []),
+          cacheMiddleware({
+            includedCollections,
+            includedGlobals,
+            includedPaths,
+            apiBaseUrl: config?.routes?.api || '/api'
+          })
+        ]
+      }
     }
   }
-}
