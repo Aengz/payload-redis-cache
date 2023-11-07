@@ -1,7 +1,9 @@
-import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload/types'
+import { CollectionAfterDeleteHook } from 'payload/types'
 import { invalidateCache } from '../adapters/cacheHelpers'
 
-export const invalidateCacheAfterChangeHook: CollectionAfterChangeHook = ({ doc }) => {
+/* Explicit type as CollectionAfterChangeHook | GlobalAfterChangeHook
+   can lead to a type error in the payload configuration. */
+export const invalidateCacheAfterChangeHook = ({ doc }) => {
   // invalidate cache
   invalidateCache()
   return doc

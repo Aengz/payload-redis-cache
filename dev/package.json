@@ -14,10 +14,13 @@
     "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
   },
   "dependencies": {
-    "@aengz/payload-redis-cache": "^0.1.7",
+    "@aengz/payload-redis-cache": "^1.0.4",
+    "@payloadcms/bundler-webpack": "^1.0.5",
+    "@payloadcms/db-mongodb": "^1.0.6",
+    "@payloadcms/richtext-slate": "^1.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
-    "payload": "^1.6.3",
+    "payload": "2.0.15",
     "redis": "^4.5.1"
   },
   "devDependencies": {
