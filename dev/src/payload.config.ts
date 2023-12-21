@@ -10,9 +10,9 @@ import Users from './collections/Users'
 const config: Config = {
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
-    user: Users.slug
+    user: Users.slug,
+    bundler: webpackBundler()
   },
-  bundler: webpackBundler(),
   collections: [Users, Examples],
   editor: slateEditor({}),
   db: mongooseAdapter({
