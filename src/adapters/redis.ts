@@ -11,7 +11,7 @@ export interface InitRedisContextParams {
   indexesName: string
 }
 
-class RedisContext implements IRedisContext {
+export class RedisContext implements IRedisContext {
   private redisClient: RedisClientType | null = null
   private namespace: string | null = null
   private indexesName: string | null = null
