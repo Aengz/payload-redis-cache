@@ -1,7 +1,11 @@
 import pino from 'pino'
 
 export const logger = pino({
-  transport: {
-    target: 'pino-pretty'
-  }
+  ...(process.env.LOGGER_TRANSPORT
+    ? {
+        transport: {
+          target: process.env.LOGGER_TRANSPORT
+        }
+      }
+    : null)
 })
