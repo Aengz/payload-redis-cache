@@ -1,0 +1,5 @@
+#!/bin/sh
+export CI=TRUE
+. "$(dirname "$0")/_/husky.sh"
+yarn test
+yarn build

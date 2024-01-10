@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis'
-import { initRedisContext, redisContext } from './redis'
+import { RedisContext } from './redis'
 
 jest.mock('redis', () => ({
   createClient: jest.fn()
@@ -10,7 +10,8 @@ describe('RedisContext', () => {
 
   beforeEach(() => {
     redisClient = {
-      connect: jest.fn()
+      connect: jest.fn(),
+      on: jest.fn()
     } as any
   })
 
@@ -23,7 +24,8 @@ describe('RedisContext', () => {
         namespace: 'namespace',
         indexesName: 'indexesName'
       }
-      initRedisContext(params)
+      const redisContext = new RedisContext()
+      redisContext.init(params)
 
       expect(createClient).toHaveBeenCalledWith({ url: 'redis://localhost' })
       expect(redisClient.connect).toHaveBeenCalled()
@@ -39,7 +41,8 @@ describe('RedisContext', () => {
         namespace: 'namespace',
         indexesName: 'indexesName'
       }
-      initRedisContext(params)
+      const redisContext = new RedisContext()
+      redisContext.init(params)
 
       expect(redisContext.getRedisClient()).toBe(redisClient)
       expect(redisContext.getNamespace()).toBe('namespace')
@@ -55,7 +58,8 @@ describe('RedisContext', () => {
         namespace: 'namespace',
         indexesName: 'indexesName'
       }
-      initRedisContext(params)
+      const redisContext = new RedisContext()
+      redisContext.init(params)
 
       expect(redisContext.getRedisClient()).toBeNull()
       expect(redisContext.getNamespace()).toBe('namespace')
